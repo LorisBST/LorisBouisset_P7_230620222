@@ -1,0 +1,27 @@
+body { font-weight: bold;
+    font-family: "lato";}
+
+#tab-register, #tab-login, #btnRegister, #btnLogin { font-weight: bold;
+    font-family: "lato";}
+
+
+
+
+.nav-pills .pill-1 .nav-link:not(.active) {
+    background-color: darkgrey;
+    color: black;
+}
+
+.nav-pills .pill-2 .nav-link:not(.active) {
+    background-color: darkgrey;
+}
+
+.nav-pills .pill-1 .nav-link {
+    background-color: #FD2D01;
+    color: white;
+}
+
+.nav-pills .pill-2 .nav-link {
+    background-color: #FD2D01;
+    color: white;
+}
