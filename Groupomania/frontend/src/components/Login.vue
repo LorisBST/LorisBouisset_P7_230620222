@@ -56,7 +56,7 @@ export default {
           </div>
 
           <!-- Submit button -->
-          <button type="submit" id="btnLogin" class="btn btn-block mb-4" style="background: #FD2D01; color: white">Se connecter</button>
+          <button type="submit" id="btnLogin" class="btn btn-block mb-4" style="background: #FD2D01; color: white">Connexion</button>
         </form>
       </div>
       <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="tab-register" style="width: 23.5rem">
@@ -83,7 +83,7 @@ export default {
           </div>
 
           <!-- Submit button -->
-          <button type="submit" id="btnRegister" class="btn btn-block mb-3" style="background: #FD2D01; color: white">Créer un compte</button>
+          <button type="submit" id="btnRegister" class="btn btn-block mb-3" style="background: #FD2D01; color: white">Inscription</button>
         </form>
       </div>
     </div>
