@@ -1,8 +1,3 @@
-<script>
-export default {
-  name: 'Login'
-}
-</script>
 
 <template>
 
@@ -33,15 +28,15 @@ export default {
       <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login" style="width: 23.5rem">
         <form>
           <!-- Email input -->
-          <div class="form-outline mb-4">
-            <input type="email" id="loginName" class="form-control" style="border: 1px solid lightgray"/>
-            <label class="form-label" for="loginName">Adresse E-mail</label>
+          <div class="form mb-4">
+            <input type="email" id="loginName" class="form-control" style="border: 1px solid lightgray" placeholder="Adresse E-mail" v-model="email"/>
+<!--            <label class="form-label" for="loginName">Adresse E-mail</label>-->
           </div>
 
           <!-- Password input -->
-          <div class="form-outline mb-4">
-            <input type="password" id="loginPassword" class="form-control" style="border: 1px solid lightgray"/>
-            <label class="form-label" for="loginPassword">Mot de passe</label>
+          <div class="form mb-4">
+            <input type="password" id="loginPassword" class="form-control" placeholder="Mot de passe" style="border: 1px solid lightgray" v-model="password"/>
+<!--            <label class="form-label" for="loginPassword">Mot de passe</label>-->
           </div>
 
           <!-- 2 column grid layout -->
@@ -56,22 +51,22 @@ export default {
           </div>
 
           <!-- Submit button -->
-          <button type="submit" id="btnLogin" class="btn btn-block mb-4" style="background: #FD2D01; color: white">Connexion</button>
+          <button type="submit" v-on:click="login" id="btnLogin" class="btn btn-block mb-4" style="background: #FD2D01; color: white">Connexion</button>
         </form>
       </div>
       <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="tab-register" style="width: 23.5rem">
         <form>
 
           <!-- Email input -->
-          <div class="form-outline mb-4">
-            <input type="email" id="registerEmail" class="form-control" style="border: 0.5px solid lightgrey" />
-            <label class="form-label" for="registerEmail" >Adresse E-mail</label>
+          <div class="form mb-4">
+            <input type="email" id="registerEmail" class="form-control" style="border: 0.5px solid lightgrey" placeholder="Adresse E-mail"/>
+<!--            <label class="form-label" for="registerEmail" >Adresse E-mail</label>-->
           </div>
 
           <!-- Password input -->
-          <div class="form-outline mb-4">
-            <input type="password" id="registerPassword" class="form-control" style="border: 0.5px solid lightgrey" />
-            <label class="form-label" for="registerPassword">Mot de passe</label>
+          <div class="form mb-4">
+            <input type="password" id="registerPassword" class="form-control" style="border: 0.5px solid lightgrey" placeholder="Mot de passe">
+<!--            <label class="form-label" for="registerPassword">Mot de passe</label>-->
           </div>
           <!-- Checkbox -->
           <div class="form-check d-flex justify-content-center mb-4">
@@ -83,7 +78,7 @@ export default {
           </div>
 
           <!-- Submit button -->
-          <button type="submit" id="btnRegister" class="btn btn-block mb-3" style="background: #FD2D01; color: white">Inscription</button>
+          <button  type="submit" v-on:click="register" id="btnRegister" class="btn btn-block mb-3" style="background: #FD2D01; color: white">Inscription</button>
         </form>
       </div>
     </div>
@@ -105,3 +100,36 @@ export default {
 <style>
 
 </style>
+
+<script>
+import { $fetch } from 'ohmyfetch'
+export default {
+  name: "Login",
+  data() {
+    return {
+      email: "",
+      password: ""
+    }
+  },
+  methods: {
+    async login() {    // Triggered by submit
+      await $fetch('http://localhost:4200/api/auth/signup', {
+        method: "POST",
+        body: {
+          email: this.email,
+          password: this.password,
+        }
+      })
+    },
+    // async register() {
+    //   await $fetch('http://localhost:4200/api/auth/signup', {
+    //     method: "POST",
+    //     body: {
+    //       email: this.email,
+    //       password: this.password,
+    //     }
+    //   })
+    // }
+  }
+}
+</script>

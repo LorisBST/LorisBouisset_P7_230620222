@@ -9,8 +9,8 @@ const mongodbErrorHandler = require('mongoose-mongodb-errors')
 mongoose.plugin(mongodbErrorHandler);
 
 
-// const sauceRoutes = require('./routes/sauce');
-// const userRoutes = require('./routes/user');
+const sauceRoutes = require('./routes/sauce');
+const userRoutes = require('./routes/user');
 
 
 mongoose.connect(process.env.SECRET_DTB,
@@ -24,12 +24,12 @@ mongoose.connect(process.env.SECRET_DTB,
 app.use(cors())
 app.use(express.json()); // récupère les objets JSON
 // app.use('/images', express.static(path.join(__dirname, 'images')));
-// app.use('/api/sauces', sauceRoutes);
-// app.use('/api/auth', userRoutes);
+app.use('/api/sauces', sauceRoutes);
+app.use('/api/auth', userRoutes);
 
 
 
 module.exports = app; // exports permet d'utiliser notre fonction sur d'autres fichiers
 
-// npm run dev -- --port 4200  (front)
+// npm run dev (front)
 // nodemon server (back)

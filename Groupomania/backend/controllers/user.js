@@ -4,15 +4,12 @@ const User = require("../models/User");
 require('dotenv').config()
 
 exports.signup = (req, res) => {
-    console.log("ok");
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
-            console.log('ok2');
             const user = new User({
                 email : req.body.email,
                 password: hash
             })
-            console.log("ok3")
             user.save()
                 .then(() => res.status(201).json({ message: "Utilisateur créé !" }))
                 .catch(error => res.status(400).json({ error }))

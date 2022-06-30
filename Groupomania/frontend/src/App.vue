@@ -13,13 +13,12 @@ export default {
 </template>
 
 <style>
+
 body { font-weight: bold;
   font-family: "lato",serif!important;}
 
 #tab-register, #tab-login, #btnRegister, #btnLogin { font-weight: bold;
   font-family: "lato", serif!important;}
-
-
 
 
 .nav-pills .pill-1 .nav-link:not(.active) {
