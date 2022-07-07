@@ -1,7 +1,26 @@
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken")
 const User = require("../models/User");
+const Sauce = require("../models/sauce");
 require('dotenv').config()
+
+
+exports.findOneUser = (req, res) => {
+    User.findOne({ _id: req.params.id })
+        .then(sauce => res.status(200).json(user))
+        .catch(error => res.status(404).json({ error: error }))
+}
+
+exports.updateUser = (req, res) => {
+    const userObject = req.file ?
+        {
+            ...JSON.parse(req.body.user),
+            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        } : { ...req.body }
+    User.updateOne({ _id: req.params.id }, { ...userObject, _id: req.params.id })
+        .then(() => res.status(200).json({ message: 'User updated!' }))
+        .catch(error => res.status(400).json({ error }))
+}
 
 exports.signup = (req, res) => {
     bcrypt.hash(req.body.password, 10)

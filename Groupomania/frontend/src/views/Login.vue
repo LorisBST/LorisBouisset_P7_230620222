@@ -156,13 +156,14 @@ export default {
   },
   methods: {
     async login() {    // Triggered by submit
-      await $fetch('http://localhost:4200/api/auth/login', {
+     const response = await $fetch('http://localhost:4200/api/auth/login', {
         method: "POST",
         body: {
           email: this.loginForm.email,
           password: this.loginForm.password,
         }
       })
+      // if response
     },
     async register() {
       await $fetch('http://localhost:4200/api/auth/signup', {
