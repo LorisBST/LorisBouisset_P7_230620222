@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken")
 const User = require("../models/User");
-const Sauce = require("../models/sauce");
+// const Sauce = require("../models/sauce");
 require('dotenv').config()
 
 

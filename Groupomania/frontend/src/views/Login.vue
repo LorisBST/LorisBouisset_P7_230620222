@@ -140,6 +140,11 @@ body { font-weight: bold;
 <script>
 import {$fetch} from 'ohmyfetch'
 
+// let buttonRegister = window.localStorage.setItem('access_token', token)
+
+const urlLogin = `http://localhost:4200/api/auth/login`
+const urlSignup = `http://localhost:4200/api/auth/signup`
+
 export default {
   name: "Login",
   data() {
@@ -156,17 +161,20 @@ export default {
   },
   methods: {
     async login() {    // Triggered by submit
-     const response = await $fetch('http://localhost:4200/api/auth/login', {
+     const response = await $fetch((urlLogin), {
         method: "POST",
         body: {
           email: this.loginForm.email,
           password: this.loginForm.password,
-        }
+        },
       })
-      // if response
+      const token = response.token
+      localStorage.setItem('token', token)
+
     },
+  },
     async register() {
-      await $fetch('http://localhost:4200/api/auth/signup', {
+      await $fetch((urlSignup), {
         method: "POST",
         body: {
           email: this.registerForm.email,
@@ -174,6 +182,5 @@ export default {
         }
       })
     }
-  }
 }
 </script>
