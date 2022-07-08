@@ -6,8 +6,12 @@ require('dotenv').config()
 
 
 exports.findOneUser = (req, res) => {
-    User.findOne({ _id: req.params.id })
-        .then(sauce => res.status(200).json(user))
+    User.findById(req.params.id)
+        .then(user => {
+             user.password = undefined
+            console.log(user)
+           return res.status(200).json(user)
+        })
         .catch(error => res.status(404).json({ error: error }))
 }
 

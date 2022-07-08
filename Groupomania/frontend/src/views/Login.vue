@@ -140,6 +140,8 @@ body { font-weight: bold;
 <script>
 import {$fetch} from 'ohmyfetch'
 
+
+
 // let buttonRegister = window.localStorage.setItem('access_token', token)
 
 const urlLogin = `http://localhost:4200/api/auth/login`
@@ -170,7 +172,7 @@ export default {
       })
       const token = response.token
       localStorage.setItem('token', token)
-
+      localStorage.setItem("userId", response.userId)
     },
   },
     async register() {

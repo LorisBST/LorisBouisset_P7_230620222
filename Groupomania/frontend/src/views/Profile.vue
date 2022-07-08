@@ -1,8 +1,39 @@
 
 <script>
+import {$fetch} from 'ohmyfetch'
+
 export default {
-  name: "Profile"
+  name: "Profile",
+  data() {
+    return {
+      userForm: {
+        fullname:"",
+        email: "",
+        service: ""
+      },
+    }
+  },
+  methods: {
+  async getProfile() {
+    const urlProfile = `http://localhost:4200/api/auth/profile/${localStorage.getItem('userId')}`
+    const response = await $fetch((urlProfile), {
+      method:"GET",
+      headers : {Authorization:`Token ${localStorage.getItem("token")}`}
+
+    })
+    this.userForm.fullname = response.fullname
+    this.userForm.email = response.email
+    this.userForm.service = response.service
+  }
+
+  },
+ async created() {
+    await this.getProfile()
+  }
+
 }
+
+
 </script>
 
 
@@ -34,8 +65,8 @@ export default {
           <div class="d-flex flex-column align-items-center text-center">
             <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="Admin" class="rounded-circle" width="150">
             <div class="mt-3">
-              <h4>Prénom Nom</h4>
-              <p class="text-secondary mb-1">Full Stack Developer</p>
+              <h4>{{userForm.fullname}}</h4>
+              <p class="text-secondary mb-1">{{userForm.service}}</p>
             </div>
           </div>
         </div>
@@ -49,7 +80,7 @@ export default {
               <h6 class="mb-0">Nom complet</h6>
             </div>
             <div class="col-sm-9 text-secondary">
-              Prénom Nom
+              {{userForm.fullname}}
             </div>
           </div>
           <hr>
@@ -58,7 +89,7 @@ export default {
               <h6 class="mb-0">Adresse E-mail</h6>
             </div>
             <div class="col-sm-9 text-secondary">
-              adressemail@email.com
+              {{userForm.email}}
             </div>
           </div>
           <hr>
@@ -67,7 +98,7 @@ export default {
               <h6 class="mb-0">Service</h6>
             </div>
             <div class="col-sm-9 text-secondary">
-              Ressources humaines
+              {{userForm.service}}
             </div>
           </div>
 
