@@ -55,7 +55,7 @@
           </div>
 
           <!-- Submit button -->
-          <button type="submit" @click="login(); loginRedirect()" id="btnLogin" class="btn btn-block mb-4"
+          <button type="submit" @click.prevent="login" id="btnLogin" class="btn btn-block mb-4"
                   style="background: #FD2D01; color: white">Connexion
           </button>
         </form>
@@ -110,36 +110,39 @@
 
 <style>
 
-body { font-weight: bold;
-  font-family: "lato",serif!important;}
+body {
+  font-weight: bold;
+  font-family: "lato", serif !important;
+}
 
-#tab-register, #tab-login, #btnRegister, #btnLogin { font-weight: bold;
-  font-family: "lato", serif!important;}
+#tab-register, #tab-login, #btnRegister, #btnLogin {
+  font-weight: bold;
+  font-family: "lato", serif !important;
+}
 
 
 .nav-pills .pill-1 .nav-link:not(.active) {
-  background-color: darkgrey!important;
+  background-color: darkgrey !important;
   color: black;
 }
 
 .nav-pills .pill-2 .nav-link:not(.active) {
-  background-color: darkgrey!important;
+  background-color: darkgrey !important;
 }
 
 .nav-pills .pill-1 .nav-link {
-  background-color: #FD2D01!important;
+  background-color: #FD2D01 !important;
   color: white;
 }
 
 .nav-pills .pill-2 .nav-link {
-  background-color: #FD2D01!important;
+  background-color: #FD2D01 !important;
   color: white;
 }
 </style>
 
 <script>
-import {$fetch} from 'ohmyfetch'
-
+import { $fetch } from 'ohmyfetch'
 
 
 // let buttonRegister = window.localStorage.setItem('access_token', token)
@@ -163,7 +166,7 @@ export default {
   },
   methods: {
     async login() {    // Triggered by submit
-     const response = await $fetch((urlLogin), {
+      const response = await $fetch((urlLogin), {
         method: "POST",
         body: {
           email: this.loginForm.email,
@@ -172,21 +175,20 @@ export default {
       })
       const token = response.token
       localStorage.setItem('token', token)
-      localStorage.setItem("userId", response.userId)
-    },
-     loginRedirect() {
+      this.$store.commit("setUserId", response.userId)
       this.$router.push('/profile')
+      // localStorage.setItem("userId", response.userId)
     },
   },
-    async register() {
-      await $fetch((urlSignup), {
-        method: "POST",
-        body: {
-          email: this.registerForm.email,
-          password: this.registerForm.password,
-        }
-      })
-    }
+  async register() {
+    await $fetch((urlSignup), {
+      method: "POST",
+      body: {
+        email: this.registerForm.email,
+        password: this.registerForm.password,
+      }
+    })
+  }
 
 }
 </script>

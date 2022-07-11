@@ -66,7 +66,7 @@
                   <h6 class="mb-0">Adresse E-mail</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  <input type="text" class="form-control" placeholder="adressemail@email.com" disabled>
+                  <input type="text" class="form-control" v-model="userProfile.email" disabled>
                 </div>
               </div>
               <div class="row mb-3">
@@ -114,6 +114,17 @@ export default {
     }
   },
   methods: {
+    async getProfile() {
+      const urlProfile = `http://localhost:4200/api/auth/profile/${localStorage.getItem('userId')}`
+      const response = await $fetch((urlProfile), {
+        method:"GET",
+        headers : {Authorization:`Token ${localStorage.getItem("token")}`}
+
+      })
+      this.userProfile.fullname = response.fullname
+      this.userProfile.email = response.email
+      this.userProfile.service = response.service
+    },
 
     async updateProfile() {
       const userId = localStorage.getItem('userId')
@@ -123,7 +134,7 @@ export default {
         body: {
           userId,
           fullname: this.userProfile.fullname,
-          // email: this.userProfile.email,
+          email: this.userProfile.email,
           service: this.userProfile.service
 
         }
@@ -139,7 +150,10 @@ export default {
       this.$router.push('/login')
     }
 
-  }
+  },
+  async created() {
+    await this.getProfile()
+  },
 }
 
 
