@@ -13,6 +13,7 @@ export default {
       },
     }
   },
+
   methods: {
   async getProfile() {
     const urlProfile = `http://localhost:4200/api/auth/profile/${localStorage.getItem('userId')}`
@@ -24,12 +25,18 @@ export default {
     this.userForm.fullname = response.fullname
     this.userForm.email = response.email
     this.userForm.service = response.service
-  }
+  },
+    logout(){
+      localStorage.clear()
+      this.$router.push('/login')
 
+    },
   },
  async created() {
     await this.getProfile()
-  }
+  },
+
+
 
 }
 
@@ -38,7 +45,11 @@ export default {
 
 
 <template>
-<div class="container">
+  <div style="display: flex;
+    justify-content: flex-end;">
+    <input type="submit" @click="logout()" class="btn btn-danger px-4" value="Se déconnecter">
+  </div>
+  <div class="container">
 <div class="main-body">
 
   <!-- Breadcrumb -->
@@ -77,7 +88,7 @@ export default {
         <div class="card-body">
           <div class="row">
             <div class="col-sm-3">
-              <h6 class="mb-0">Nom complet</h6>
+              <h6 class="mb-0">Prénom Nom</h6>
             </div>
             <div class="col-sm-9 text-secondary">
               {{userForm.fullname}}

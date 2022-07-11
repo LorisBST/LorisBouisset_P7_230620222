@@ -55,7 +55,7 @@
           </div>
 
           <!-- Submit button -->
-          <button type="submit" @click.prevent="login" id="btnLogin" class="btn btn-block mb-4"
+          <button type="submit" @click="login(); loginRedirect()" id="btnLogin" class="btn btn-block mb-4"
                   style="background: #FD2D01; color: white">Connexion
           </button>
         </form>
@@ -87,7 +87,7 @@
           </div>
 
           <!-- Submit button -->
-          <button type="submit" @click.prevent="register" id="btnRegister" class="btn btn-block mb-3"
+          <button type="submit" @click.prevent="register()" id="btnRegister" class="btn btn-block mb-3"
                   style="background: #FD2D01; color: white">Inscription
           </button>
         </form>
@@ -174,6 +174,9 @@ export default {
       localStorage.setItem('token', token)
       localStorage.setItem("userId", response.userId)
     },
+     loginRedirect() {
+      this.$router.push('/profile')
+    },
   },
     async register() {
       await $fetch((urlSignup), {
@@ -184,5 +187,6 @@ export default {
         }
       })
     }
+
 }
 </script>

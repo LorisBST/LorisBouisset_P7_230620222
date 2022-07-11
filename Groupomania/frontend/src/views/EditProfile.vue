@@ -1,5 +1,9 @@
 
 <template>
+  <div style="display: flex;
+    justify-content: flex-end;">
+    <input type="submit" @click="logout()" class="btn btn-danger px-4" value="Se déconnecter">
+  </div>
   <div class="container">
     <div class="main-body" >
 
@@ -39,7 +43,7 @@
                 </i>
 
                 <div class="mt-3">
-                  <h4>Nom Prénom</h4>
+                  <h4>Prénom Nom</h4>
                   <p>Service</p>
                 </div>
               </div>
@@ -54,7 +58,7 @@
                   <h6 class="mb-0">Nom complet</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  <input type="text" class="form-control" v-model="userProfile.fullname" placeholder="Nom Prénom">
+                  <input type="text" class="form-control" v-model="userProfile.fullname" placeholder="Prénom Nom">
                 </div>
               </div>
               <div class="row mb-3">
@@ -62,7 +66,7 @@
                   <h6 class="mb-0">Adresse E-mail</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  <input type="text" class="form-control" v-model="userProfile.email" placeholder="adressemail@email.com">
+                  <input type="text" class="form-control" placeholder="adressemail@email.com" disabled>
                 </div>
               </div>
               <div class="row mb-3">
@@ -76,7 +80,7 @@
               <div class="row">
                 <div class="col-sm-3"></div>
                 <div class="col-sm-9 text-secondary">
-                  <input type="submit" @click.prevent="updateProfile" class="btn btn-primary px-4" value="Enregistrer">
+                  <input type="submit" @click="updateProfile(); goProfile()" class="btn btn-primary px-4" value="Enregistrer">
                 </div>
               </div>
             </div>
@@ -104,29 +108,38 @@ export default {
     return {
       userProfile: {
         fullname: "",
-        email: "",
         service: ""
       },
 
     }
   },
   methods: {
+
     async updateProfile() {
-      const response = await $fetch('http://localhost:4200/api/auth/profile/update', {
+      const userId = localStorage.getItem('userId')
+      const response = await $fetch(`http://localhost:4200/api/auth/profile/${userId}`, {
         method: "PUT",
+        headers: {Authorization: `Token ${localStorage.getItem("token")}`},
         body: {
+          userId,
           fullname: this.userProfile.fullname,
-          email: this.userProfile.email,
+          // email: this.userProfile.email,
           service: this.userProfile.service
 
         }
       })
+    },
+    goProfile() {
+      this.$router.push('/profile');
+
+
+    },
+    logout(){
+      localStorage.clear()
+      this.$router.push('/login')
     }
 
-
   }
-
-
 }
 
 
