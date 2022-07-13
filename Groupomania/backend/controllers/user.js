@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken")
 const User = require("../models/User");
+const fs = require ("fs")
 // const Sauce = require("../models/sauce");
 require('dotenv').config()
 
@@ -19,7 +20,7 @@ exports.updateUser = (req, res) => {
     const userObject = req.file ?
         {
             ...JSON.parse(req.body.user),
-            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+            profilePicture: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
         } : { ...req.body }
     User.updateOne({ _id: req.params.id }, { ...userObject, _id: req.params.id })
         .then(() => res.status(200).json({ message: 'User updated!' }))

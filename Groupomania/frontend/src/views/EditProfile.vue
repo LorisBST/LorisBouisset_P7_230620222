@@ -7,11 +7,11 @@
     <div class="main-body">
       <div class="row"
            style="
-  margin-top: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;">
+                  margin-top: 2rem;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  gap: 1rem;">
         <div class="col-lg-4">
           <div class="card">
             <div class="card-body">
@@ -21,24 +21,10 @@
                 <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="Admin"
                      class="rounded-circle p-1 bg-primary" width="110">
 
-                <i class="fas fa-camera fa-lg"
-
-                   style="
-    position: relative;
-    margin-top: -2rem;
-    margin-left: 5rem;
-    font-size: 1.2rem;
-    box-shadow: 1px 1px 3px grey;
-    background-color: var(--bs-gray-200);
-    padding: 0.5rem;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;">
-                </i>
-
+                <span id="buttonFile" class="btn btn-primary btn-file">
+                  <i class="fas fa-camera fa-lg"></i>
+                  <input type="file" v-on:change="userProfile.profilePicture">
+                  </span>
                 <div class="mt-3">
                   <h4>Prénom Nom</h4>
                   <p>Service</p>
@@ -90,10 +76,48 @@
   </div>
 </template>
 <style>
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+
+#buttonFile {
+  opacity: 70%;
+  margin-left: 4rem;
+  margin-top: -2rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  display: flex;
+  background-color: darkgrey;
+  border-radius: 50%;
+  border: none;
+  align-items: center;
+  justify-content: center;
+}
+
+#buttonFile:hover {
+  opacity: 100%;
+  transition: opacity 350ms;
+}
+
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  cursor: inherit;
+  display: block;
+}
+
 .fa-camera:hover {
   cursor: pointer;
-  opacity: 75%;
-
 }
 </style>
 <script>
@@ -106,7 +130,8 @@ export default {
       userProfile: {
         fullname: "",
         email: "",
-        service: ""
+        service: "",
+        profilePicture: ""
       },
     }
   },
@@ -118,6 +143,7 @@ export default {
         headers: { Authorization: `Token ${localStorage.getItem("token")}` }
 
       })
+      this.userProfile.profilePicture = response.profilePicture
       this.userProfile.fullname = response.fullname
       this.userProfile.email = response.email
       this.userProfile.service = response.service
@@ -129,6 +155,7 @@ export default {
         headers: { Authorization: `Token ${localStorage.getItem("token")}` },
         body: {
           userId,
+          profilePicture: this.userProfile.profilePicture = response.profilePicture,
           fullname: this.userProfile.fullname,
           email: this.userProfile.email,
           service: this.userProfile.service

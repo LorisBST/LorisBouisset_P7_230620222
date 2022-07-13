@@ -1,12 +1,20 @@
 <script>
 export default {
-  name: "Home"
+  name: "Home",
+  methods : {
+    logout(){
+      localStorage.clear()
+      this.$router.push('/login')
+
+    }
+  }
 }
 </script>
 
 <template>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
 <div class="container-fluid">
   <ul class="navbar-nav">
     <!-- Avatar -->
@@ -29,17 +37,18 @@ export default {
       </a>
       <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
         <li>
-          <a class="dropdown-item" href="#">My profile</a>
+          <a class="dropdown-item" href="/profile">Mon profil</a>
         </li>
         <li>
-          <a class="dropdown-item" href="#">Settings</a>
-        </li>
-        <li>
-          <a class="dropdown-item" href="#">Logout</a>
+          <a class="dropdown-item" @click="logout">Se déconnecter</a>
         </li>
       </ul>
     </li>
   </ul>
+  <div style="display: flex;
+    justify-content: flex-end;">
+    <input type="submit" @click="logout()" class="btn btn-danger px-4" value="Se déconnecter">
+  </div>
 </div>
 </nav>
   </template>

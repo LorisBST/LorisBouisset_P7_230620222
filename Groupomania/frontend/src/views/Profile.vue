@@ -1,5 +1,7 @@
 
 <script>
+
+
 import {$fetch} from 'ohmyfetch'
 
 export default {
@@ -7,6 +9,7 @@ export default {
   data() {
     return {
       userForm: {
+        // profilePicture: "",
         fullname:"",
         email: "",
         service: ""
@@ -22,14 +25,21 @@ export default {
       headers : {Authorization:`Token ${localStorage.getItem("token")}`}
 
     })
+    // this.userProfile.profilePicture = response.profilePicture
     this.userForm.fullname = response.fullname
     this.userForm.email = response.email
     this.userForm.service = response.service
   },
+    editProfile(){
+      this.$router.push('/editprofile');
+    },
     logout(){
       localStorage.clear()
       this.$router.push('/login')
 
+    },
+    goHome(){
+      this.$router.push('/home');
     },
   },
   async created() {
@@ -43,11 +53,19 @@ export default {
 
 </script>
 
-
 <template>
+
+
   <div style="display: flex;
     justify-content: flex-end;">
-    <input type="submit" @click="logout()" class="btn btn-danger px-4" value="Se déconnecter">
+
+    <a class="btn btn-danger" target="__blank" @click="logout"> se déconnecter <BootstrapIcon icon="door-open-fill" id="power" size="1rem" color="white" font-weight="bold"/></a>
+
+  </div>
+
+  <div style="display: flex;
+    justify-content: flex-end;">
+    <a class="btn btn-light" target="__blank" @click="goHome"> acceuil <BootstrapIcon icon="house-door-fill" id="house" size="1rem" color="black" gap="1rem" font-weight="bold"/></a>
   </div>
   <div class="container">
 <div class="main-body">
@@ -116,7 +134,7 @@ export default {
           <hr>
           <div class="row">
             <div class="col-sm-12">
-              <a class="btn btn-info " target="__blank" href="http://localhost:3000/editprofile">Modifier</a>
+              <a class="btn btn-info" target="__blank" @click="editProfile">Modifier</a>
             </div>
           </div>
         </div>
@@ -129,4 +147,17 @@ export default {
   </template>
 
 <style>
+#power {
+  font-weight: bold;
+}
+
+#house {
+  position: relative;
+  margin-left: 5px;
+  top: -1px;
+}
+
+.btn-danger, .btn-light {
+  width : 12rem
+}
 </style>
