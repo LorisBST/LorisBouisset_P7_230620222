@@ -87,7 +87,7 @@
           </div>
 
           <!-- Submit button -->
-          <button type="submit" @click.prevent="register()" id="btnRegister" class="btn btn-block mb-3"
+          <button type="submit" @click="register" id="btnRegister" class="btn btn-block mb-3"
                   style="background: #FD2D01; color: white">Inscription
           </button>
         </form>
@@ -178,16 +178,16 @@ export default {
       localStorage.setItem("userId", response.userId)
       this.$router.push('/profile')
     },
-  },
-  async register() {
-    await $fetch((urlSignup), {
-      method: "POST",
-      body: {
-        email: this.registerForm.email,
-        password: this.registerForm.password,
-      }
-    })
-  }
 
+    async register() {
+      await $fetch((urlSignup), {
+        method: "POST",
+        body: {
+          email: this.registerForm.email,
+          password: this.registerForm.password,
+        }
+      })
+    }
+  }
 }
 </script>
