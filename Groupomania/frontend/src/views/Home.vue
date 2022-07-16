@@ -16,6 +16,7 @@ export default {
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
 <div class="container-fluid">
+
   <ul class="navbar-nav">
     <!-- Avatar -->
     <li class="nav-item dropdown">
@@ -45,6 +46,9 @@ export default {
       </ul>
     </li>
   </ul>
+  <img src="/logo/GroupomaniaLogos/logo-no-background.png"
+       height="56"
+  />
   <div style="display: flex;
     justify-content: flex-end;">
     <input type="submit" @click="logout()" class="btn btn-danger px-4" value="Se déconnecter">

@@ -9,10 +9,10 @@ export default {
   data() {
     return {
       userForm: {
-        // profilePicture: "",
         fullname:"",
         email: "",
-        service: ""
+        service: "",
+        profilePicture: "",
       },
     }
   },
@@ -25,10 +25,10 @@ export default {
       headers : {Authorization:`Token ${localStorage.getItem("token")}`}
 
     })
-    // this.userProfile.profilePicture = response.profilePicture
     this.userForm.fullname = response.fullname
     this.userForm.email = response.email
     this.userForm.service = response.service
+    this.userProfile.profilePicture = response.profilePicture
   },
     editProfile(){
       this.$router.push('/editprofile');
@@ -70,16 +70,6 @@ export default {
   <div class="container">
 <div class="main-body">
 
-  <!-- Breadcrumb -->
-<!--  <nav aria-label="breadcrumb" class="main-breadcrumb">-->
-<!--    <ol class="breadcrumb">-->
-<!--      <li class="breadcrumb-item"><a href="index.html">Home</a></li>-->
-<!--      <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li>-->
-<!--      <li class="breadcrumb-item active" aria-current="page">User Profile</li>-->
-<!--    </ol>-->
-<!--  </nav>-->
-  <!-- /Breadcrumb -->
-
   <div class="row gutters-sm"
 
   style="
@@ -92,7 +82,7 @@ export default {
       <div class="card">
         <div class="card-body">
           <div class="d-flex flex-column align-items-center text-center">
-            <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="Admin" class="rounded-circle" width="150">
+            <img src="{{userForm.profilePicture}}" alt="Admin" class="rounded-circle" width="150">
             <div class="mt-3">
               <h4>{{userForm.fullname}}</h4>
               <p class="text-secondary mb-1">{{userForm.service}}</p>

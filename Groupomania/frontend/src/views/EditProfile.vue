@@ -17,17 +17,21 @@
             <div class="card-body">
 
               <div class="d-flex flex-column align-items-center text-center">
+                  <div>
+                    <input id="file" class="inputfile" type="file"  accept="image/*" v-on:change="onChange"/>
+                    <label for="file" class="label-file"><i class="fas fa-camera fa-lg"></i></label>
+                  </div>
 
-                <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="Admin"
-                     class="rounded-circle p-1 bg-primary" width="110">
 
-                <span id="buttonFile" class="btn btn-primary btn-file">
-                  <i class="fas fa-camera fa-lg"></i>
-                  <input type="file" v-on:change="userProfile.profilePicture">
-                  </span>
+                <img v-if="this.imagePreview" :src="this.imagePreview"
+                     id="ProfilePic" alt="User Profile Picture"
+                     class="rounded-circle p-1 bg-primary" width="110"/>
+                <img v-else="userProfile.profilePicture" is="null" src="https://st3.depositphotos.com/6672868/13701/v/600/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
+                     id="ProfilePicPlaceholder" alt="User Profile Picture Placeholder"
+                     class="rounded-circle p-1 bg-primary" width="110"/>
                 <div class="mt-3">
-                  <h4>Prénom Nom</h4>
-                  <p>Service</p>
+                  <h4>{{ userProfile.fullname }}</h4>
+                  <p>{{ userProfile.service }}</p>
                 </div>
               </div>
             </div>
@@ -77,26 +81,53 @@
 </template>
 <style>
 
-.btn-file {
-  position: relative;
+/*#ProfilePic {*/
+/*  width: 12rem*/
+/*}*/
+
+
+
+
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
   overflow: hidden;
+  position: absolute;
+  z-index: -1;
 }
 
-#buttonFile {
+
+.rounded-circle {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50% !important;
+}
+
+/*.fa-camera {*/
+/*  position: relative;*/
+/*  overflow: hidden;*/
+/*}*/
+
+.fa-camera {
   opacity: 70%;
   margin-left: 4rem;
   margin-top: -2rem;
   width: 2.2rem;
   height: 2.2rem;
   display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
   background-color: darkgrey;
   border-radius: 50%;
   border: none;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  top: 8rem;
+  right: -1rem;
 }
 
-#buttonFile:hover {
+.fa-camera:hover {
   opacity: 100%;
   transition: opacity 350ms;
 }
@@ -131,8 +162,9 @@ export default {
         fullname: "",
         email: "",
         service: "",
-        profilePicture: ""
+        profilePicture: null
       },
+      imagePreview : null
     }
   },
   methods: {
@@ -168,7 +200,17 @@ export default {
     logout() {
       localStorage.clear()
       this.$router.push('/login')
-    }
+    },
+    onChange(e) {
+      const file = e.target.files[0]
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = e => {
+        this.imagePreview = e.target.result
+      }
+      this.userProfile.profilePicture = string;
+    },
+
   },
   async created() {
     await this.getProfile()
