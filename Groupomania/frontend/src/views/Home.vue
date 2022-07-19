@@ -31,9 +31,10 @@ export default {
         <img
             src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp"
             class="rounded-circle"
-            height="22"
             alt="Portrait of a Woman"
             loading="lazy"
+            style="width: 3rem;
+    height: 3rem;"
         />
       </a>
       <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -55,6 +56,106 @@ export default {
   </div>
 </div>
 </nav>
+
+  <!-- partie Bloc commentaire -->
+
+  <div class="commentButtonBlock">
+    <div class="form-group" id="commentBlock">
+      <label for="exampleFormControlTextarea1"></label>
+      <textarea class="form-control" id="textAreaComment" rows="3"
+                placeholder="🖊️ Écrivez un commentaire..."></textarea>
+    </div>
+    <!-- bouton post commentaire -->
+    <div class="buttonPost">
+      <button type="button" id="postButton" class="btn btn-primary">Poster</button>
+    </div>
+  </div>
+
+  <!-- Faux commentaire modèle -->
+
+  <div id="blockFakeComment">
+    <div class="card" id="fakeComment">
+      <div class="card-body">
+        <div id="commentUserId">
+          <img src="https://scontent-mrs2-1.xx.fbcdn.net/v/t39.30808-6/269603898_3082552205347023_4398186156418495931_n.jpg?stp=cp0_dst-jpg_e15_fr_q65&_nc_cat=109&ccb=1-7&_nc_sid=85a577&efg=eyJpIjoidCJ9&_nc_ohc=auEzTJ8sviQAX-nszwy&_nc_ht=scontent-mrs2-1.xx&oh=00_AT9w3OTWsinR0zUZnTltYEBf_yPHwYrIU0ntt_rqFrp_3g&oe=62DAED7D"
+               alt="avatar" width="25"
+                    height="25"/>
+          <p class="small mb-0 ms-2">Loris Bouisset - Développeur Web</p>
+        </div>
+        <div class="d-flex justify-content-between">
+          <div class="d-flex flex-row">
+            <p>Ici se situe votre commentaire</p>
+          </div>
+          <div class="d-flex flex-row align-items-center">
+            <p class="small text-muted mb-0">J'aime</p>
+            <i class="far fa-thumbs-up ms-2 fa-xs text-black" style="margin-top: -0.16rem;"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="blockFakeComment">
+    <div class="card" id="fakeComment">
+      <div class="card-body">
+        <div id="commentUserId">
+          <img src="https://cdn.futura-sciences.com/buildsv6/images/largeoriginal/d/9/a/d9a1058910_50163142_elon-musk1.jpg" alt="avatar" width="25"
+               height="25"/>
+          <p class="small mb-0 ms-2">Elon Musk - Patron de Space X</p>
+        </div>
+        <div class="d-flex justify-content-between">
+          <div class="d-flex flex-row">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consectetur libero suscipit metus cursus cursus. Nunc fringilla, quam eget posuere fermentum, leo turpis feugiat velit, eget ullamcorper odio enim id nisi. Curabitur nulla nisi, malesuada quis posuere ut, dictum non purus. Ut dapibus lacus et nulla venenatis rutrum in vel lorem. Cras ut elit imperdiet, ornare dolor sagittis, ultricies sem. Sed sit amet turpis elementum sem finibus mollis. Nulla vitae vulputate augue. Morbi faucibus, sem sed consectetur laoreet, magna nisl porttitor tellus,</p>
+          </div>
+          <div class="d-flex flex-row align-items-center">
+            <p class="small text-muted mb-0">J'aime</p>
+            <i class="far fa-thumbs-up ms-2 fa-xs text-black" style="margin-top: -0.16rem;"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   </template>
 
-  <style></style>
+  <style>
+  #textAreaComment, #fakeComment{
+    height: auto;
+    width: 32rem;
+  }
+
+#commentUserId {
+  display: flex;
+  margin-bottom: 2rem;
+}
+
+#textAreaComment:focus{
+  outline: none !important;
+  border:1px solid cornflowerblue;
+  box-shadow: 0 0 10px cornflowerblue;
+
+  }
+  ::-webkit-input-placeholder {
+    font-weight: bold;
+  }
+  #commentBlock, #blockFakeComment{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3rem;
+  }
+
+  .commentButtonBlock {
+    display: grid;
+    justify-items: end;
+    justify-content: center;
+  }
+
+  @media only screen and (max-width: 767px) {
+    .commentButtonBlock {
+      display: block;
+    }
+  }
+
+  </style>

@@ -68,8 +68,8 @@
               <div class="row">
                 <div class="col-sm-3"></div>
                 <div class="col-sm-9 text-secondary">
-                  <input type="submit" @click="updateProfile(); updateProfilePicture()
-                  // ; goProfile()
+                  <input type="submit" @click="updateProfile()
+                  ; goProfile()
 " class="btn btn-primary px-4"
                          value="Enregistrer">
                 </div>
@@ -164,7 +164,7 @@ export default {
         fullname: "",
         email: "",
         service: "",
-        profilePicture: null
+        // profilePicture: null
       },
       imagePreview : null
     }
@@ -186,7 +186,8 @@ export default {
       const userId = localStorage.getItem('userId')
       const response = await $fetch(`http://localhost:4200/api/auth/profile/${userId}`, {
         method: "PUT",
-        headers: { Authorization: `Token ${localStorage.getItem("token")}` },
+        headers: { Authorization: `Token ${localStorage.getItem("token")}`} ,
+          // 'Content-Type': 'multipart/form-data'},
         body: {
           userId,
           // profilePicture: this.userProfile.profilePicture,
@@ -196,21 +197,9 @@ export default {
         }
       })
     },
-    async updateProfilePicture() {
-      const userId = localStorage.getItem('userId')
-      const response = await $fetch(`http://localhost:4200/api/auth/profile/${userId}`, {
-            method: "PUT",
-            headers: { Authorization: `Token ${localStorage.getItem("token")}`,
-              'Content-Type': 'multipart/form-data'},
-            body: {
-              userId,
-            profilePicture: this.profilePicture = this.userProfile.profilePicture
-      }
-    })
+    goProfile() {
+      this.$router.push('/profile');
     },
-    // goProfile() {
-    //   this.$router.push('/profile');
-    // },
     logout() {
       localStorage.clear()
       this.$router.push('/login')
