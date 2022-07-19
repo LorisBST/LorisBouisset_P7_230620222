@@ -28,7 +28,7 @@ export default {
     this.userForm.fullname = response.fullname
     this.userForm.email = response.email
     this.userForm.service = response.service
-    this.userProfile.profilePicture = response.profilePicture
+    // this.userProfile.profilePicture = response.profilePicture
   },
     editProfile(){
       this.$router.push('/editprofile');
