@@ -78,43 +78,80 @@ export default {
       <div class="card-body">
         <div id="commentUserId">
           <img src="https://scontent-mrs2-1.xx.fbcdn.net/v/t39.30808-6/269603898_3082552205347023_4398186156418495931_n.jpg?stp=cp0_dst-jpg_e15_fr_q65&_nc_cat=109&ccb=1-7&_nc_sid=85a577&efg=eyJpIjoidCJ9&_nc_ohc=auEzTJ8sviQAX-nszwy&_nc_ht=scontent-mrs2-1.xx&oh=00_AT9w3OTWsinR0zUZnTltYEBf_yPHwYrIU0ntt_rqFrp_3g&oe=62DAED7D"
-               alt="avatar" width="25"
-                    height="25"/>
-          <p class="small mb-0 ms-2">Loris Bouisset - Développeur Web</p>
+               alt="avatar" width="30"
+                    height="30"/>
+          <div class="userIdDate">
+            <p class="small">Loris Bouisset - Développeur Web</p>
+            <p style="font-size: 0.875em;">Le 22 juillet 2022</p>
+          </div>
         </div>
-        <div class="d-flex justify-content-between">
-          <div class="d-flex flex-row">
+        <div class="d-flex flex-column gap-1">
+          <div class="">
             <p>Ici se situe votre commentaire</p>
           </div>
-          <div class="d-flex flex-row align-items-center">
-            <p class="small text-muted mb-0">J'aime</p>
-            <i class="far fa-thumbs-up ms-2 fa-xs text-black" style="margin-top: -0.16rem;"></i>
+          <div class="d-flex gap-2" id="likeEditDelete" style="margin-top: 1rem">
+            <button class="btn btn-outline-danger"><i class="bi bi-trash-fill"></i>
+            </button>
+            <button class="btn btn-outline-primary">✍️</button>
+            <button class="btn btn-outline-success">👍</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div id="blockFakeComment">
-    <div class="card" id="fakeComment">
-      <div class="card-body">
-        <div id="commentUserId">
-          <img src="https://cdn.futura-sciences.com/buildsv6/images/largeoriginal/d/9/a/d9a1058910_50163142_elon-musk1.jpg" alt="avatar" width="25"
-               height="25"/>
-          <p class="small mb-0 ms-2">Elon Musk - Patron de Space X</p>
-        </div>
-        <div class="d-flex justify-content-between">
-          <div class="d-flex flex-row">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consectetur libero suscipit metus cursus cursus. Nunc fringilla, quam eget posuere fermentum, leo turpis feugiat velit, eget ullamcorper odio enim id nisi. Curabitur nulla nisi, malesuada quis posuere ut, dictum non purus. Ut dapibus lacus et nulla venenatis rutrum in vel lorem. Cras ut elit imperdiet, ornare dolor sagittis, ultricies sem. Sed sit amet turpis elementum sem finibus mollis. Nulla vitae vulputate augue. Morbi faucibus, sem sed consectetur laoreet, magna nisl porttitor tellus,</p>
-          </div>
-          <div class="d-flex flex-row align-items-center">
-            <p class="small text-muted mb-0">J'aime</p>
-            <i class="far fa-thumbs-up ms-2 fa-xs text-black" style="margin-top: -0.16rem;"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<!--  <div id="blockFakeComment">-->
+<!--    <div class="card" id="fakeComment">-->
+<!--      <div class="card-body">-->
+<!--        <div id="commentUserId">-->
+<!--          <img src="https://cdn.futura-sciences.com/buildsv6/images/largeoriginal/d/9/a/d9a1058910_50163142_elon-musk1.jpg" alt="avatar" width="30"-->
+<!--               height="30"/>-->
+<!--          <div class="userIdDate">-->
+<!--            <p class="">Elon Musk - Tesla and Space X CEO</p>-->
+<!--            <p style="font-size: 0.875em;">Le 21 juillet 2022</p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="d-flex justify-content-between">-->
+<!--          <div class="d-flex flex-row">-->
+<!--            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consectetur libero suscipit metus cursus cursus. Nunc fringilla, quam eget posuere fermentum, leo turpis feugiat velit, eget ullamcorper odio enim id nisi. Curabitur nulla nisi, malesuada quis posuere ut, dictum non purus. Ut dapibus lacus et nulla venenatis rutrum in vel lorem. Cras ut elit imperdiet, ornare dolor sagittis, ultricies sem. Sed sit amet turpis elementum sem finibus mollis. Nulla vitae vulputate augue. Morbi faucibus, sem sed consectetur laoreet, magna nisl porttitor tellus,</p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="d-flex gap-2" id="likeEditDelete" style="margin-top: 1rem">-->
+<!--          <button class="btn btn-outline-danger"><i class="bi bi-trash-fill"></i>-->
+<!--          </button>-->
+<!--          <button class="btn btn-outline-primary">✍️</button>-->
+<!--          <button class="btn btn-outline-success">👍</button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div id="blockFakeComment">-->
+<!--    <div class="card" id="fakeComment">-->
+<!--      <div class="card-body">-->
+<!--        <div id="commentUserId">-->
+<!--          <img src="http://crash.coco.free.fr/images/artwork/crash1/papupapu.jpg" alt="avatar" width="30"-->
+<!--               height="30"/>-->
+<!--          <div class="userIdDate">-->
+<!--            <p class="">Crash Bandicoot - Aventurier</p>-->
+<!--            <p style="font-size: 0.875em;">Le 17 juillet 2022</p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="d-flex justify-content-between">-->
+<!--          <div class="d-flex flex-column">-->
+<!--            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consectetur libero suscipit metus cursus cursus. Nunc fringilla, quam eget posuere fermentum, leo turpis feugiat velit, eget ullamcorper odio enim id nisi. Curabitur nulla nisi, malesuada quis posuere ut, dictum non purus. Ut dapibus lacus et nulla venenatis rutrum in vel lorem. Cras ut elit imperdiet, ornare dolor sagittis, ultricies sem. Sed sit amet turpis elementum sem finibus mollis. Nulla vitae vulputate augue. Morbi faucibus, sem sed consectetur laoreet, magna nisl porttitor tellus,</p>-->
+<!--            <img src="http://crash.coco.free.fr/images/artwork/crash2/spacetube.jpg" alt="avatar"/>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="d-flex gap-2" id="likeEditDelete" style="margin-top: 1rem">-->
+<!--          <button class="btn btn-outline-danger"><i class="bi bi-trash-fill"></i>-->
+<!--          </button>-->
+<!--          <button class="btn btn-outline-primary">✍️</button>-->
+<!--          <button class="btn btn-outline-success">👍</button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
 
 
   </template>
@@ -124,10 +161,16 @@ export default {
     height: auto;
     width: 32rem;
   }
+.userIdDate {
+  display: flex;
+  flex-direction: column;
+  line-height: 1rem;
+}
 
 #commentUserId {
   display: flex;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+  gap: 1rem;
 }
 
 #textAreaComment:focus{
@@ -144,6 +187,10 @@ export default {
     justify-content: center;
     align-items: center;
     margin-top: 3rem;
+  }
+
+#likeEditDelete .btn  {
+width : 3rem
   }
 
   .commentButtonBlock {
