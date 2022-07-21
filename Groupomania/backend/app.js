@@ -9,7 +9,7 @@ const mongodbErrorHandler = require('mongoose-mongodb-errors')
 mongoose.plugin(mongodbErrorHandler);
 
 
-// const sauceRoutes = require('./routes/sauce'); // remplacer par post
+const commentRoutes = require('./routes/comment'); // remplacer par post
 const userRoutes = require('./routes/user');
 
 
@@ -24,7 +24,7 @@ mongoose.connect(process.env.SECRET_DTB,
 app.use(cors())
 app.use(express.json()); // récupère les objets JSON
 app.use('/images', express.static(path.join(__dirname, 'images')));
-// app.use('/api/sauces', sauceRoutes); // // remplacer par post
+app.use('/api/comments', commentRoutes); // // remplacer par post
 app.use('/api/auth', userRoutes);
 
 

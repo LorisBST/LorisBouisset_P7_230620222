@@ -1,12 +1,33 @@
 <script>
+import { $fetch } from "ohmyfetch";
+
 export default {
   name: "Home",
+  data() {
+    return {
+      postComment:{
+        comment:""
+      }
+    }
+  },
   methods : {
     logout(){
       localStorage.clear()
       this.$router.push('/login')
 
-    }
+    },
+    async pushComment() {
+      const userId = localStorage.getItem('userId')
+      const response = await $fetch("http://localhost:4200/api/comments", {
+        method: "POST",
+        headers: { Authorization: `Token ${localStorage.getItem("token")}`} ,
+        // 'Content-Type': 'multipart/form-data'},
+        body: {
+          userId,
+          postComment : this.postComment.comment
+        }
+      })
+    },
   }
 }
 </script>
@@ -62,12 +83,11 @@ export default {
   <div class="commentButtonBlock">
     <div class="form-group" id="commentBlock">
       <label for="exampleFormControlTextarea1"></label>
-      <textarea class="form-control" id="textAreaComment" rows="3"
-                placeholder="🖊️ Écrivez un commentaire..."></textarea>
+      <textarea v-model="postComment.comment" class="form-control" id="textAreaComment" rows="3" placeholder="🖊️ Écrivez un commentaire..."></textarea>
     </div>
     <!-- bouton post commentaire -->
     <div class="buttonPost">
-      <button type="button" id="postButton" class="btn btn-primary">Poster</button>
+      <button type="button" id="postButton" @click="pushComment" class="btn btn-primary">Poster</button>
     </div>
   </div>
 
