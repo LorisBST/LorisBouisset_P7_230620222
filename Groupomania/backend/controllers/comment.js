@@ -1,28 +1,25 @@
 const Comment = require('../models/comment')
-const fs = require('fs')
+// const fs = require('fs')
 
-// Récuperer array de toutes les sauces
+// Récuperer tous les commentaires
 exports.getAllComments = (req, res, next) => {
     Comment.find()
         .then(comments => res.status(200).json(comments))
         .catch(error => res.status(400).json({ error: error }))
 }
 
-// Récuperer une sauce (page indiv)
+// Récuperer un commentaire
 exports.getOneComment = (req, res, next) => {
-    Comment.findOne({ _id: req.params.id })
+    Comment.findOne({ userId: req.params.id })
         .then(comment => res.status(200).json(comment))
         .catch(error => res.status(404).json({ error: error }))
 }
 
-// Créer une sauce
+// Créer un commentaire
 exports.createComment = (req, res, next) => {
-    const commentObject = JSON.parse(req.body.comment)
-    delete commentObject._id
-    const comment = new Comment({
-        ...commentObject,
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    });
+    console.log(req.body)
+    const comment = new Comment({userId : req.body.userId, message : req.body.message })
+    console.log("2")
     comment.save()
         .then(() => res.status(201).json({ message: 'Comment saved!' }))
         .catch(error => res.status(400).json({ error }))

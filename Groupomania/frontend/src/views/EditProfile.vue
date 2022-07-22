@@ -23,7 +23,7 @@
                   </div>
 
 
-                <img v-if="this.imagePreview" :src="this.imagePreview"
+                <img v-if="this.userProfile.profilePicture" :src="this.userProfile.profilePicture"
                      id="ProfilePic" alt="User Profile Picture"
                      class="rounded-circle p-1 bg-primary" width="110"/>
                 <img v-else="userProfile.profilePicture" is="null" src="https://st3.depositphotos.com/6672868/13701/v/600/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
@@ -164,9 +164,8 @@ export default {
         fullname: "",
         email: "",
         service: "",
-        // profilePicture: null
+        profilePicture: null
       },
-      imagePreview : null
     }
   },
   methods: {
@@ -177,7 +176,7 @@ export default {
         headers: { Authorization: `Token ${localStorage.getItem("token")}` }
 
       })
-      // this.userProfile.profilePicture = response.profilePicture
+      this.userProfile.profilePicture = response.profilePicture
       this.userProfile.fullname = response.fullname
       this.userProfile.email = response.email
       this.userProfile.service = response.service
@@ -186,11 +185,12 @@ export default {
       const userId = localStorage.getItem('userId')
       const response = await $fetch(`http://localhost:4200/api/auth/profile/${userId}`, {
         method: "PUT",
-        headers: { Authorization: `Token ${localStorage.getItem("token")}`} ,
-          // 'Content-Type': 'multipart/form-data'},
+        headers: { Authorization: `Token ${localStorage.getItem("token")}` ,
+          // 'Content-Type': 'multipart/form-data'
+        },
         body: {
           userId,
-          // profilePicture: this.userProfile.profilePicture,
+          profilePicture: this.userProfile.profilePicture,
           fullname: this.userProfile.fullname,
           email: this.userProfile.email,
           service: this.userProfile.service
@@ -209,10 +209,8 @@ export default {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = e => {
-        this.imagePreview = e.target.result
+        this.userProfile.profilePicture = e.target.result
       }
-      this.userProfile.profilePicture = file;
-
     },
 
   },

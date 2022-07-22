@@ -3,7 +3,6 @@
 
 
 import {$fetch} from 'ohmyfetch'
-
 export default {
   name: "Profile",
   data() {
@@ -12,7 +11,7 @@ export default {
         fullname:"",
         email: "",
         service: "",
-        profilePicture: "",
+        profilePicture: null,
       },
     }
   },
@@ -28,7 +27,7 @@ export default {
     this.userForm.fullname = response.fullname
     this.userForm.email = response.email
     this.userForm.service = response.service
-    // this.userProfile.profilePicture = response.profilePicture
+    this.userForm.profilePicture = response.profilePicture
   },
     editProfile(){
       this.$router.push('/editprofile');
@@ -42,7 +41,7 @@ export default {
       this.$router.push('/home');
     },
   },
-  async created() {
+  async mounted() {
     await this.getProfile()
   },
 
@@ -82,7 +81,7 @@ export default {
       <div class="card">
         <div class="card-body">
           <div class="d-flex flex-column align-items-center text-center">
-            <img src="{{null}}" alt="Admin" class="rounded-circle" width="150">
+            <img :src="userForm.profilePicture" alt="Admin" class="rounded-circle" width="150">
             <div class="mt-3">
               <h4>{{userForm.fullname}}</h4>
               <p class="text-secondary mb-1">{{userForm.service}}</p>
