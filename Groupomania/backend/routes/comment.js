@@ -7,7 +7,7 @@ const commentCtrl = require('../controllers/comment')
 
 
 router.get('/', auth,  commentCtrl.getAllComments)
-// router.get('/:id', auth, commentCtrl.getOneComment)
+router.get('/:id', auth, commentCtrl.getOneComment)
 router.post('/', auth, commentCtrl.createComment)
 // router.put('/:id', auth, multer, commentCtrl.updateSauce)
 // router.delete('/:id', auth, commentCtrl.deleteSauce)

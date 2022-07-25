@@ -11,7 +11,7 @@ export default {
       postComment: {
         message: ""
       },
-      // comments : [{message:"blabla", author:"Loris"}]
+      comments : []
     }
   },
   methods: {
@@ -34,13 +34,24 @@ export default {
         }
       })
     },
+    async getComment() {
+      const response = await $fetch("http://localhost:4200/api/comments", {
+        method: "GET",
+        headers: {
+          Authorization: `Token ${localStorage.getItem("token")}`,
+        },
+      })
+      if (response != null)
+        this.comments = response.comments
+
+
+    },
     async getProfile() {
       const urlProfile = `http://localhost:4200/api/auth/profile/${localStorage.getItem('userId')}`
       const response = await $fetch((urlProfile), {
         method:"GET",
         headers : {Authorization:`Token ${localStorage.getItem("token")}`}
       })
-      console.log(response)
       this.userForm.profilePicture = response.profilePicture
     },
 
@@ -55,6 +66,7 @@ export default {
   },
   async mounted() {
     await this.getProfile()
+    await this.getComment()
   },
 }
 </script>
@@ -119,35 +131,41 @@ export default {
 
   <!-- Faux commentaire modèle -->
 
-  <div id="blockFakeComment">
-    <div class="card" id="fakeComment">
-      <div class="card-body">
-        <div id="commentUserId">
-          <img
-              src="https://scontent-mrs2-1.xx.fbcdn.net/v/t39.30808-6/269603898_3082552205347023_4398186156418495931_n.jpg?stp=cp0_dst-jpg_e15_fr_q65&_nc_cat=109&ccb=1-7&_nc_sid=85a577&efg=eyJpIjoidCJ9&_nc_ohc=auEzTJ8sviQAX-nszwy&_nc_ht=scontent-mrs2-1.xx&oh=00_AT9w3OTWsinR0zUZnTltYEBf_yPHwYrIU0ntt_rqFrp_3g&oe=62DAED7D"
-              alt="avatar" width="30"
-              height="30"/>
-          <div class="userIdDate">
-            <p class="small">Loris Bouisset - Développeur Web</p>
-<!--            {{ comments.author }}-->
-            <p style="font-size: 0.875em;">Le 22 juillet 2022</p>
-          </div>
-        </div>
-        <div class="d-flex flex-column gap-1">
-          <div class="">
-            <p>Ici se trouve votre message</p>
-<!--            {{ comments.message }}-->
-          </div>
-          <div class="d-flex gap-2" id="likeEditDelete" style="margin-top: 1rem">
-            <button class="btn btn-outline-danger"><i class="bi bi-trash-fill"></i>
-            </button>
-            <button class="btn btn-outline-primary">✍️</button>
-            <button class="btn btn-outline-success">👍</button>
-          </div>
-        </div>
-      </div>
+
+    <div v-for="comment in comments">
+      {{ comment.message }}
     </div>
-  </div>
+
+
+<!--  <div id="blockFakeComment">-->
+<!--    <div class="card" id="fakeComment">-->
+<!--      <div class="card-body">-->
+<!--        <div id="commentUserId">-->
+<!--          <img-->
+<!--              src="https://scontent-mrs2-1.xx.fbcdn.net/v/t39.30808-6/269603898_3082552205347023_4398186156418495931_n.jpg?stp=cp0_dst-jpg_e15_fr_q65&_nc_cat=109&ccb=1-7&_nc_sid=85a577&efg=eyJpIjoidCJ9&_nc_ohc=auEzTJ8sviQAX-nszwy&_nc_ht=scontent-mrs2-1.xx&oh=00_AT9w3OTWsinR0zUZnTltYEBf_yPHwYrIU0ntt_rqFrp_3g&oe=62DAED7D"-->
+<!--              alt="avatar" width="30"-->
+<!--              height="30"/>-->
+<!--          <div class="userIdDate">-->
+<!--            <p class="small">Loris B. - Développeur Web</p>-->
+<!--&lt;!&ndash;            {{ comments.author }}&ndash;&gt;-->
+<!--            <p style="font-size: 0.875em;">Le 22 juillet 2022</p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="d-flex flex-column gap-1">-->
+<!--          <div class="">-->
+<!--            <p>Ici se trouve votre message</p>-->
+<!--&lt;!&ndash;            {{ comments.message }}&ndash;&gt;-->
+<!--          </div>-->
+<!--          <div class="d-flex gap-2" id="likeEditDelete" style="margin-top: 1rem">-->
+<!--            <button class="btn btn-outline-danger"><i class="bi bi-trash-fill"></i>-->
+<!--            </button>-->
+<!--            <button class="btn btn-outline-primary">✍️</button>-->
+<!--            <button class="btn btn-outline-success">👍</button>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
 
   <!--  <div id="blockFakeComment">-->
   <!--    <div class="card" id="fakeComment">-->
