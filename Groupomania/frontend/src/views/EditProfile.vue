@@ -24,8 +24,10 @@
 
 
                 <img v-if="this.userProfile.profilePicture" :src="this.userProfile.profilePicture"
-                     id="ProfilePic" alt="User Profile Picture"
-                     class="rounded-circle p-1 bg-primary" width="110"/>
+                     id="ProfilePic" alt="User Profile Picture" width="110"
+                     class="rounded-circle p-1 bg-primary" style="   object-fit: cover;
+  width: 110px;
+  height: 110px;"/>
                 <img v-else="userProfile.profilePicture" is="null" src="https://st3.depositphotos.com/6672868/13701/v/600/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
                      id="ProfilePicPlaceholder" alt="User Profile Picture Placeholder"
                      class="rounded-circle p-1 bg-primary" width="110"/>

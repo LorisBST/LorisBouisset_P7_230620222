@@ -6,6 +6,9 @@ export default {
   data() {
     return {
       userForm: {
+        fullname:"",
+        email: "",
+        service: "",
         profilePicture: null,
       },
       postComment: {
@@ -35,14 +38,13 @@ export default {
       })
     },
     async getComment() {
-      const response = await $fetch("http://localhost:4200/api/comments", {
+      this.comments = await $fetch("http://localhost:4200/api/comments", {
         method: "GET",
         headers: {
           Authorization: `Token ${localStorage.getItem("token")}`,
         },
       })
-      if (response != null)
-        this.comments = response.comments
+
 
 
     },
@@ -52,17 +54,11 @@ export default {
         method:"GET",
         headers : {Authorization:`Token ${localStorage.getItem("token")}`}
       })
+      this.userForm.fullname = response.fullname
+      this.userForm.email = response.email
+      this.userForm.service = response.service
       this.userForm.profilePicture = response.profilePicture
     },
-
-    // async getComment() {
-    //   const response = await $fetch("http://localhost:4200/api/comments", {
-    //     method: "GET",
-    //     headers: {
-    //       Authorization: `Token ${localStorage.getItem("token")}`,
-    //     },
-    //   })
-    // },
   },
   async mounted() {
     await this.getProfile()
@@ -92,7 +88,7 @@ export default {
                 class="rounded-circle"
                  alt="User Picture"
                 style="width: 3rem;
-    height: 3rem;"
+    height: 3rem;  object-fit: cover"
             />
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -129,97 +125,46 @@ export default {
     </div>
   </div>
 
+
+<!--  <div>-->
+<!--   <ul id="messageBlock" v-for="comment in comments">-->
+
+<!--     {{ comment.message }} </ul>-->
+
+<!--  </div>-->
+
+
   <!-- Faux commentaire modèle -->
 
 
-    <div v-for="comment in comments">
-      {{ comment.message }}
+
+
+  <div id="blockFakeComment" v-for="comment in comments">
+    <div class="card" id="fakeComment">
+      <div class="card-body">
+        <div id="commentUserId">
+          <img
+              src="https://scontent-mrs2-1.xx.fbcdn.net/v/t39.30808-6/269603898_3082552205347023_4398186156418495931_n.jpg?stp=cp0_dst-jpg_e15_fr_q65&_nc_cat=109&ccb=1-7&_nc_sid=85a577&efg=eyJpIjoidCJ9&_nc_ohc=auEzTJ8sviQAX-nszwy&_nc_ht=scontent-mrs2-1.xx&oh=00_AT9w3OTWsinR0zUZnTltYEBf_yPHwYrIU0ntt_rqFrp_3g&oe=62DAED7D"
+              alt="avatar" width="30"
+              height="30"/>
+          <div class="userIdDate">
+            <p class="small">{{this.userForm.fullname + " - " + this.userForm.service}}</p>
+            <p style="font-size: 0.875em;">Le 22 juillet 2022</p>
+          </div>
+        </div>
+        <div class="d-flex flex-column gap-1">
+          <div class="">
+            <p>{{comment.message}}</p>
+          </div>
+          <div class="d-flex gap-2" id="likeEditDelete" style="margin-top: 1rem">
+            <button class="btn btn-outline-danger" @click="deleteMessage"><i class="bi bi-trash-fill"></i></button>
+            <button class="btn btn-outline-primary" @click="editMessage">✍️</button>
+            <button class="btn btn-outline-success" @click="likeMessage">👍</button>
+          </div>
+        </div>
+      </div>
     </div>
-
-
-<!--  <div id="blockFakeComment">-->
-<!--    <div class="card" id="fakeComment">-->
-<!--      <div class="card-body">-->
-<!--        <div id="commentUserId">-->
-<!--          <img-->
-<!--              src="https://scontent-mrs2-1.xx.fbcdn.net/v/t39.30808-6/269603898_3082552205347023_4398186156418495931_n.jpg?stp=cp0_dst-jpg_e15_fr_q65&_nc_cat=109&ccb=1-7&_nc_sid=85a577&efg=eyJpIjoidCJ9&_nc_ohc=auEzTJ8sviQAX-nszwy&_nc_ht=scontent-mrs2-1.xx&oh=00_AT9w3OTWsinR0zUZnTltYEBf_yPHwYrIU0ntt_rqFrp_3g&oe=62DAED7D"-->
-<!--              alt="avatar" width="30"-->
-<!--              height="30"/>-->
-<!--          <div class="userIdDate">-->
-<!--            <p class="small">Loris B. - Développeur Web</p>-->
-<!--&lt;!&ndash;            {{ comments.author }}&ndash;&gt;-->
-<!--            <p style="font-size: 0.875em;">Le 22 juillet 2022</p>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div class="d-flex flex-column gap-1">-->
-<!--          <div class="">-->
-<!--            <p>Ici se trouve votre message</p>-->
-<!--&lt;!&ndash;            {{ comments.message }}&ndash;&gt;-->
-<!--          </div>-->
-<!--          <div class="d-flex gap-2" id="likeEditDelete" style="margin-top: 1rem">-->
-<!--            <button class="btn btn-outline-danger"><i class="bi bi-trash-fill"></i>-->
-<!--            </button>-->
-<!--            <button class="btn btn-outline-primary">✍️</button>-->
-<!--            <button class="btn btn-outline-success">👍</button>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-
-  <!--  <div id="blockFakeComment">-->
-  <!--    <div class="card" id="fakeComment">-->
-  <!--      <div class="card-body">-->
-  <!--        <div id="commentUserId">-->
-  <!--          <img src="https://cdn.futura-sciences.com/buildsv6/images/largeoriginal/d/9/a/d9a1058910_50163142_elon-musk1.jpg" alt="avatar" width="30"-->
-  <!--               height="30"/>-->
-  <!--          <div class="userIdDate">-->
-  <!--            <p class="">Elon Musk - Tesla and Space X CEO</p>-->
-  <!--            <p style="font-size: 0.875em;">Le 21 juillet 2022</p>-->
-  <!--          </div>-->
-  <!--        </div>-->
-  <!--        <div class="d-flex justify-content-between">-->
-  <!--          <div class="d-flex flex-row">-->
-  <!--            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consectetur libero suscipit metus cursus cursus. Nunc fringilla, quam eget posuere fermentum, leo turpis feugiat velit, eget ullamcorper odio enim id nisi. Curabitur nulla nisi, malesuada quis posuere ut, dictum non purus. Ut dapibus lacus et nulla venenatis rutrum in vel lorem. Cras ut elit imperdiet, ornare dolor sagittis, ultricies sem. Sed sit amet turpis elementum sem finibus mollis. Nulla vitae vulputate augue. Morbi faucibus, sem sed consectetur laoreet, magna nisl porttitor tellus,</p>-->
-  <!--          </div>-->
-  <!--        </div>-->
-  <!--        <div class="d-flex gap-2" id="likeEditDelete" style="margin-top: 1rem">-->
-  <!--          <button class="btn btn-outline-danger"><i class="bi bi-trash-fill"></i>-->
-  <!--          </button>-->
-  <!--          <button class="btn btn-outline-primary">✍️</button>-->
-  <!--          <button class="btn btn-outline-success">👍</button>-->
-  <!--        </div>-->
-  <!--      </div>-->
-  <!--    </div>-->
-  <!--  </div>-->
-
-  <!--  <div id="blockFakeComment">-->
-  <!--    <div class="card" id="fakeComment">-->
-  <!--      <div class="card-body">-->
-  <!--        <div id="commentUserId">-->
-  <!--          <img src="http://crash.coco.free.fr/images/artwork/crash1/papupapu.jpg" alt="avatar" width="30"-->
-  <!--               height="30"/>-->
-  <!--          <div class="userIdDate">-->
-  <!--            <p class="">Crash Bandicoot - Aventurier</p>-->
-  <!--            <p style="font-size: 0.875em;">Le 17 juillet 2022</p>-->
-  <!--          </div>-->
-  <!--        </div>-->
-  <!--        <div class="d-flex justify-content-between">-->
-  <!--          <div class="d-flex flex-column">-->
-  <!--            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consectetur libero suscipit metus cursus cursus. Nunc fringilla, quam eget posuere fermentum, leo turpis feugiat velit, eget ullamcorper odio enim id nisi. Curabitur nulla nisi, malesuada quis posuere ut, dictum non purus. Ut dapibus lacus et nulla venenatis rutrum in vel lorem. Cras ut elit imperdiet, ornare dolor sagittis, ultricies sem. Sed sit amet turpis elementum sem finibus mollis. Nulla vitae vulputate augue. Morbi faucibus, sem sed consectetur laoreet, magna nisl porttitor tellus,</p>-->
-  <!--            <img src="http://crash.coco.free.fr/images/artwork/crash2/spacetube.jpg" alt="avatar"/>-->
-  <!--          </div>-->
-  <!--        </div>-->
-  <!--        <div class="d-flex gap-2" id="likeEditDelete" style="margin-top: 1rem">-->
-  <!--          <button class="btn btn-outline-danger"><i class="bi bi-trash-fill"></i>-->
-  <!--          </button>-->
-  <!--          <button class="btn btn-outline-primary">✍️</button>-->
-  <!--          <button class="btn btn-outline-success">👍</button>-->
-  <!--        </div>-->
-  <!--      </div>-->
-  <!--    </div>-->
-  <!--  </div>-->
-
+  </div>
 
 </template>
 

@@ -25,17 +25,13 @@ exports.createComment = (req, res, next) => {
         .catch(error => res.status(400).json({ error }))
 }
 
-// // update sauce
-// exports.updateComment = (req, res, next) => {
-//     const commentObject = req.file ?
-//         {
-//             ...JSON.parse(req.body.comment),
-//             imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-//         } : { ...req.body }
-//     Comment.updateOne({ _id: req.params.id }, { ...commentObject, _id: req.params.id })
-//         .then(() => res.status(200).json({ message: 'Comment updated!' }))
-//         .catch(error => res.status(400).json({ error }))
-// }
+// update sauce
+exports.updateComment = (req, res, next) => {
+    const commentObject =  { ...req.body }
+    Comment.updateOne({ _id: req.params.id }, { ...commentObject, _id: req.params.id })
+        .then(() => res.status(200).json({ message: 'Comment updated!' }))
+        .catch(error => res.status(400).json({ error }))
+}
 //
 // // Delete Comment
 // exports.deleteComment = (req, res, next) => {
