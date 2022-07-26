@@ -6,7 +6,7 @@ export default {
   data() {
     return {
       userForm: {
-        fullname:"",
+        fullname: "",
         email: "",
         service: "",
         profilePicture: null,
@@ -14,7 +14,7 @@ export default {
       postComment: {
         message: ""
       },
-      comments : []
+      comments: []
     }
   },
   methods: {
@@ -36,6 +36,26 @@ export default {
           message: this.postComment.message
         }
       })
+      location.reload()
+    },
+    async transformInput() {
+
+    },
+
+    async updateComment(commentId) {
+      const userId = localStorage.getItem('userId')
+      const response = await $fetch(`http://localhost:4200/api/comments/${commentId}`, {
+        method: "POST",
+        headers: {
+          Authorization: `Token ${localStorage.getItem("token")}`,
+
+        },
+        body: {
+          userId,
+          message: this.postComment.message
+        }
+      })
+      location.reload()
     },
     async getComment() {
       this.comments = await $fetch("http://localhost:4200/api/comments", {
@@ -44,15 +64,23 @@ export default {
           Authorization: `Token ${localStorage.getItem("token")}`,
         },
       })
-
-
-
     },
+
+    async deleteComment(commentId) {
+      this.comments = await $fetch(`http://localhost:4200/api/comments/${commentId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Token ${localStorage.getItem("token")}`,
+        },
+      })
+      location.reload()
+    },
+
     async getProfile() {
       const urlProfile = `http://localhost:4200/api/auth/profile/${localStorage.getItem('userId')}`
       const response = await $fetch((urlProfile), {
-        method:"GET",
-        headers : {Authorization:`Token ${localStorage.getItem("token")}`}
+        method: "GET",
+        headers: { Authorization: `Token ${localStorage.getItem("token")}` }
       })
       this.userForm.fullname = response.fullname
       this.userForm.email = response.email
@@ -63,6 +91,8 @@ export default {
   async mounted() {
     await this.getProfile()
     await this.getComment()
+    await this.deleteComment()
+    await this.updateComment()
   },
 }
 </script>
@@ -85,9 +115,9 @@ export default {
               aria-expanded="false"
           >
             <img :src="this.userForm.profilePicture"
-                class="rounded-circle"
+                 class="rounded-circle"
                  alt="User Picture"
-                style="width: 3rem;
+                 style="width: 3rem;
     height: 3rem;  object-fit: cover"
             />
           </a>
@@ -125,20 +155,6 @@ export default {
     </div>
   </div>
 
-
-<!--  <div>-->
-<!--   <ul id="messageBlock" v-for="comment in comments">-->
-
-<!--     {{ comment.message }} </ul>-->
-
-<!--  </div>-->
-
-
-  <!-- Faux commentaire modèle -->
-
-
-
-
   <div id="blockFakeComment" v-for="comment in comments">
     <div class="card" id="fakeComment">
       <div class="card-body">
@@ -148,17 +164,19 @@ export default {
               alt="avatar" width="30"
               height="30"/>
           <div class="userIdDate">
-            <p class="small">{{this.userForm.fullname + " - " + this.userForm.service}}</p>
+            <p class="small">{{ this.userForm.fullname + " - " + this.userForm.service }}</p>
             <p style="font-size: 0.875em;">Le 22 juillet 2022</p>
           </div>
         </div>
         <div class="d-flex flex-column gap-1">
           <div class="">
-            <p>{{comment.message}}</p>
+            <p>{{ comment.message }}</p>
           </div>
           <div class="d-flex gap-2" id="likeEditDelete" style="margin-top: 1rem">
-            <button class="btn btn-outline-danger" @click="deleteMessage"><i class="bi bi-trash-fill"></i></button>
-            <button class="btn btn-outline-primary" @click="editMessage">✍️</button>
+            <button class="btn btn-outline-danger" @click="deleteComment(comment._id)"><i class="bi bi-trash-fill"></i>
+            </button>
+
+            <button class="btn btn-outline-primary" @click="transformInput">✍️</button>  <!--  updateComment(comment._id) -->
             <button class="btn btn-outline-success" @click="likeMessage">👍</button>
           </div>
         </div>

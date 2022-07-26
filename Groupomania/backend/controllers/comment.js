@@ -15,6 +15,7 @@ exports.getOneComment = (req, res, next) => {
         .catch(error => res.status(404).json({ error: error }))
 }
 
+
 // Créer un commentaire
 exports.createComment = (req, res, next) => {
     console.log(req.body)
@@ -33,19 +34,16 @@ exports.updateComment = (req, res, next) => {
         .catch(error => res.status(400).json({ error }))
 }
 //
-// // Delete Comment
-// exports.deleteComment = (req, res, next) => {
-//     Comment.findOne({ _id: req.params.id })
-//         .then(comment => {
-//             const filename = comment.imageUrl.split('/images/')[1]
-//             fs.unlink(`images/${filename}`, () => {
-//                 Comment.deleteOne({ _id: req.params.id })
-//                     .then(() => res.status(200).json({ message: 'Comment deleted !' }))
-//                     .catch(error => res.status(400).json({ error: error }))
-//             })
-//         })
-//         .catch(error => res.status(500).json({ error }))
-// }
+// Delete Comment
+exports.deleteComment = (req, res, next) => {
+    Comment.findOne({ _id: req.params.id })
+        .then(comment => {
+                Comment.deleteOne({ _id: req.params.id })
+                    .then(() => res.status(200).json({ message: 'Comment deleted !' }))
+                    .catch(error => res.status(400).json({ error: error }))
+            })
+        .catch(error => res.status(500).json({ error }))
+}
 
 // exports.likeDislike = (req, res, next) => {
 //     if (req.body.like === 1) {

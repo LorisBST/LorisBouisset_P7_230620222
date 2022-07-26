@@ -10,7 +10,7 @@ router.get('/', auth,  commentCtrl.getAllComments)
 router.get('/:id', auth, commentCtrl.getOneComment)
 router.post('/', auth, commentCtrl.createComment)
 router.put('/:id', auth, commentCtrl.updateComment)
-// router.delete('/:id', auth, commentCtrl.deleteSauce)
+router.delete('/:id', auth, commentCtrl.deleteComment)
 // router.post('/:id/like', auth, commentCtrl.likeDislike)
 
 module.exports = router
