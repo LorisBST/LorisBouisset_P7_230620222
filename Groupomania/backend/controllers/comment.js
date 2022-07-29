@@ -3,14 +3,14 @@ const Comment = require('../models/comment')
 
 // Récuperer tous les commentaires
 exports.getAllComments = (req, res, next) => {
-    Comment.find()
+    Comment.find().populate("user", "fullname profilePicture service")
         .then(comments => res.status(200).json(comments))
         .catch(error => res.status(400).json({ error: error }))
 }
 
 // Récuperer un commentaire
 exports.getOneComment = (req, res, next) => {
-    Comment.findOne({ userId: req.params.id })
+    Comment.findOne({ userId: req.params.id }).populate("user")
         .then(comment => res.status(200).json(comment))
         .catch(error => res.status(404).json({ error: error }))
 }
@@ -19,8 +19,7 @@ exports.getOneComment = (req, res, next) => {
 // Créer un commentaire
 exports.createComment = (req, res, next) => {
     console.log(req.body)
-    const comment = new Comment({userId : req.body.userId, message : req.body.message })
-    console.log("2")
+    const comment = new Comment({ user: req.body.userId, message: req.body.message })
     comment.save()
         .then(() => res.status(201).json({ message: 'Comment saved!' }))
         .catch(error => res.status(400).json({ error }))
@@ -28,7 +27,7 @@ exports.createComment = (req, res, next) => {
 
 // update sauce
 exports.updateComment = (req, res, next) => {
-    const commentObject =  { ...req.body }
+    const commentObject = { ...req.body }
     Comment.updateOne({ _id: req.params.id }, { ...commentObject, _id: req.params.id })
         .then(() => res.status(200).json({ message: 'Comment updated!' }))
         .catch(error => res.status(400).json({ error }))
@@ -36,12 +35,13 @@ exports.updateComment = (req, res, next) => {
 //
 // Delete Comment
 exports.deleteComment = (req, res, next) => {
+
     Comment.findOne({ _id: req.params.id })
         .then(comment => {
-                Comment.deleteOne({ _id: req.params.id })
-                    .then(() => res.status(200).json({ message: 'Comment deleted !' }))
-                    .catch(error => res.status(400).json({ error: error }))
-            })
+            Comment.deleteOne({ _id: req.params.id })
+                .then(() => res.status(200).json({ message: 'Comment deleted !' }))
+                .catch(error => res.status(400).json({ error: error }))
+        })
         .catch(error => res.status(500).json({ error }))
 }
 

@@ -1,8 +1,12 @@
 <script>
 import { $fetch } from "ohmyfetch";
+import Comment from "../components/Comment.vue"
 
 export default {
   name: "Home",
+  components: {
+    Comment
+  },
   data() {
     return {
       userForm: {
@@ -21,7 +25,6 @@ export default {
     logout() {
       localStorage.clear()
       this.$router.push('/login')
-
     },
     async pushComment() {
       const userId = localStorage.getItem('userId')
@@ -29,33 +32,13 @@ export default {
         method: "POST",
         headers: {
           Authorization: `Token ${localStorage.getItem("token")}`,
-
         },
         body: {
           userId,
           message: this.postComment.message
         }
       })
-      location.reload()
-    },
-    async transformInput() {
-
-    },
-
-    async updateComment(commentId) {
-      const userId = localStorage.getItem('userId')
-      const response = await $fetch(`http://localhost:4200/api/comments/${commentId}`, {
-        method: "POST",
-        headers: {
-          Authorization: `Token ${localStorage.getItem("token")}`,
-
-        },
-        body: {
-          userId,
-          message: this.postComment.message
-        }
-      })
-      location.reload()
+      // location.reload()
     },
     async getComment() {
       this.comments = await $fetch("http://localhost:4200/api/comments", {
@@ -65,17 +48,6 @@ export default {
         },
       })
     },
-
-    async deleteComment(commentId) {
-      this.comments = await $fetch(`http://localhost:4200/api/comments/${commentId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Token ${localStorage.getItem("token")}`,
-        },
-      })
-      location.reload()
-    },
-
     async getProfile() {
       const urlProfile = `http://localhost:4200/api/auth/profile/${localStorage.getItem('userId')}`
       const response = await $fetch((urlProfile), {
@@ -91,29 +63,22 @@ export default {
   async mounted() {
     await this.getProfile()
     await this.getComment()
-    await this.deleteComment()
-    await this.updateComment()
   },
 }
 </script>
 
 <template>
-
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
     <div class="container-fluid">
-
       <ul class="navbar-nav">
         <!-- Avatar -->
         <li class="nav-item dropdown">
-          <a
-              class="nav-link dropdown-toggle d-flex align-items-center"
-              href="#"
-              id="navbarDropdownMenuLink"
-              role="button"
-              data-mdb-toggle="dropdown"
-              aria-expanded="false"
-          >
+          <a class="nav-link dropdown-toggle d-flex align-items-center"
+             href="#"
+             id="navbarDropdownMenuLink"
+             role="button"
+             data-mdb-toggle="dropdown"
+             aria-expanded="false">
             <img :src="this.userForm.profilePicture"
                  class="rounded-circle"
                  alt="User Picture"
@@ -155,34 +120,10 @@ export default {
     </div>
   </div>
 
-  <div id="blockFakeComment" v-for="comment in comments">
-    <div class="card" id="fakeComment">
-      <div class="card-body">
-        <div id="commentUserId">
-          <img
-              src="https://scontent-mrs2-1.xx.fbcdn.net/v/t39.30808-6/269603898_3082552205347023_4398186156418495931_n.jpg?stp=cp0_dst-jpg_e15_fr_q65&_nc_cat=109&ccb=1-7&_nc_sid=85a577&efg=eyJpIjoidCJ9&_nc_ohc=auEzTJ8sviQAX-nszwy&_nc_ht=scontent-mrs2-1.xx&oh=00_AT9w3OTWsinR0zUZnTltYEBf_yPHwYrIU0ntt_rqFrp_3g&oe=62DAED7D"
-              alt="avatar" width="30"
-              height="30"/>
-          <div class="userIdDate">
-            <p class="small">{{ this.userForm.fullname + " - " + this.userForm.service }}</p>
-            <p style="font-size: 0.875em;">Le 22 juillet 2022</p>
-          </div>
-        </div>
-        <div class="d-flex flex-column gap-1">
-          <div class="">
-            <p>{{ comment.message }}</p>
-          </div>
-          <div class="d-flex gap-2" id="likeEditDelete" style="margin-top: 1rem">
-            <button class="btn btn-outline-danger" @click="deleteComment(comment._id)"><i class="bi bi-trash-fill"></i>
-            </button>
-
-            <button class="btn btn-outline-primary" @click="transformInput">✍️</button>  <!--  updateComment(comment._id) -->
-            <button class="btn btn-outline-success" @click="likeMessage">👍</button>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div v-for="comment in comments">
+    <comment :comment="comment"></comment>
   </div>
+
 
 </template>
 
