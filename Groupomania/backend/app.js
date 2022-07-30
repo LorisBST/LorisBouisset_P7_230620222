@@ -2,7 +2,6 @@ const express = require("express");
 const mongoose = require('mongoose');
 const cors = require("cors") // permet d'autoriser les origines croisées
 const app = express(); // Crée une application express
-const path = require('path'); // le module fournit des utilitaires pour travailler avec le chemin du fichier et du répertoire
 require('dotenv').config()
 
 const mongodbErrorHandler = require('mongoose-mongodb-errors')
@@ -23,7 +22,6 @@ mongoose.connect(process.env.SECRET_DTB,
 app.use(cors())
 app.use(express.json({limit: '5mb'})); // récupère les objets JSON
 app.use(express.urlencoded({extended:true}))
-app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/comments', commentRoutes); // // remplacer par post
 app.use('/api/auth', userRoutes);
 

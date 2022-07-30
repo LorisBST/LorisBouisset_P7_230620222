@@ -21,8 +21,6 @@
                     <input id="file" class="inputfile" type="file"  accept="image/*" v-on:change="onChange"/>
                     <label for="file" class="label-file"><i class="fas fa-camera fa-lg"></i></label>
                   </div>
-
-
                 <img v-if="this.userProfile.profilePicture" :src="this.userProfile.profilePicture"
                      id="ProfilePic" alt="User Profile Picture" width="110"
                      class="rounded-circle p-1 bg-primary" style="   object-fit: cover;

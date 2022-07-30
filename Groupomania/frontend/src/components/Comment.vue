@@ -34,13 +34,13 @@
 <script>
 
 import { $fetch } from "ohmyfetch";
+// const moment = from ('moment')
 
 export default {
   name: "commentaire",
   props: ["comment"],
   data() {
     return {
-
     }
   },
 

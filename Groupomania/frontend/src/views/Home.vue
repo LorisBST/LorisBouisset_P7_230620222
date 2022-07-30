@@ -18,7 +18,8 @@ export default {
       postComment: {
         message: ""
       },
-      comments: []
+      comments: [],
+      // reply: []
     }
   },
   methods: {
@@ -38,7 +39,6 @@ export default {
           message: this.postComment.message
         }
       })
-      // location.reload()
     },
     async getComment() {
       this.comments = await $fetch("http://localhost:4200/api/comments", {
@@ -110,7 +110,6 @@ export default {
 
   <div class="commentButtonBlock">
     <div class="form-group" id="commentBlock">
-      <label for="exampleFormControlTextarea1"></label>
       <textarea v-model="postComment.message" class="form-control" id="textAreaComment" rows="3"
                 placeholder="🖊️ Écrivez un commentaire..."></textarea>
     </div>
@@ -118,16 +117,15 @@ export default {
     <div class="buttonPost">
       <button type="button" id="postButton" @click="pushComment" class="btn btn-primary">Poster</button>
     </div>
-  </div>
-
   <div v-for="comment in comments">
     <comment :comment="comment"></comment>
+    </div>
   </div>
-
 
 </template>
 
 <style>
+
 #textAreaComment, #fakeComment {
   height: auto;
   width: 32rem;
