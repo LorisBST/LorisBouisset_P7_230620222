@@ -1,50 +1,49 @@
 <template>
-  <div id="blockFakeComment">
-    <div class="card" id="fakeComment">
-      <div class="card-body">
-        <div id="commentUserId">
-          <img
-              :src="comment.user.profilePicture"
-              alt="avatar" width="30"
-              height="30"/>
-          <div class="userIdDate">
-            <p class="small">{{ comment.user.fullname + " - " + comment.user.service }}</p>
-            <p style="font-size: 0.875em;">Le 22 juillet 2022</p>
-          </div>
-        </div>
-        <div class="d-flex flex-column gap-1">
-          <div class="">
-            <p>{{ comment.message }}</p>
-          </div>
-          <div class="d-flex gap-2" id="likeEditDelete" style="margin-top: 1rem">
-            <button class="btn btn-outline-danger" @click="deleteComment"><i class="bi bi-trash-fill"></i>
-            </button>
-            <button class="btn btn-outline-primary" @click="transformInput">✍️</button>
-            <!--  updateComment(comment._id) -->
-            <button class="btn btn-outline-success" @click="likeMessage">👍</button>
-          </div>
-        </div>
+
+  <div class="card shadow mb-5">
+    <div class="card-header d-flex align-items-center">
+      <div style="width: 30px">
+        <img :src="comment.user.profilePicture" class="img-fluid rounded-circle" alt="...">
       </div>
+      <div class="ms-3">
+        {{ comment.user.fullname }} - <em>{{ comment.user.service }}</em>
+      </div>
+      <div class="ms-auto">
+        <a href="" class="text-warning"><i class="bi bi-pencil-fill"></i>
+        </a>
+      </div>
+      <div class="ms-2">
+        <a href="" @click="deleteComment" class="text-danger"><i class="bi bi-file-earmark-excel-fill"></i></a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p class="card-text">
+        {{ comment.message }}
+      </p>
+      <div class="card-img"> <img :src="comment.image" style="    width: 100%;"></div>
+      <small class="text-muted">{{ comment.updatedAt }}</small>
     </div>
   </div>
 </template>
 
-<style></style>
+<style>
+</style>
 
 <script>
 
 import { $fetch } from "ohmyfetch";
-// const moment = from ('moment')
+// import moment from 'moment';
+
 
 export default {
   name: "commentaire",
-  props: ["comment"],
+  props: ["comment","image"],
   data() {
-    return {
-    }
+    return {}
   },
 
   methods: {
+
     async updateComment() {
       const userId = localStorage.getItem('userId')
       const response = await $fetch(`http://localhost:4200/api/comments/${this.comment._id}`, {
@@ -67,12 +66,9 @@ export default {
           Authorization: `Token ${localStorage.getItem("token")}`,
         },
       })
-      // location.reload()
+
     },
 
-    // async transformInput() {
-    //
-    // },
   },
 }
 

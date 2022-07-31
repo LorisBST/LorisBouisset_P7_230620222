@@ -22,7 +22,7 @@
                     <label for="file" class="label-file"><i class="fas fa-camera fa-lg"></i></label>
                   </div>
                 <img v-if="this.userProfile.profilePicture" :src="this.userProfile.profilePicture"
-                     id="ProfilePic" alt="User Profile Picture" width="110"
+                     id="profilePic" alt="User Profile Picture" width="110"
                      class="rounded-circle p-1 bg-primary" style="   object-fit: cover;
   width: 110px;
   height: 110px;"/>
@@ -100,7 +100,7 @@
 }
 
 
-.rounded-circle {
+#profilePic {
   width: 8rem;
   height: 8rem;
   border-radius: 50% !important;

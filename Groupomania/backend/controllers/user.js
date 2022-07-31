@@ -11,7 +11,6 @@ exports.findOneUser = (req, res) => {
     User.findById(req.params.id)
         .then(user => {
             user.password = undefined
-            console.log(user)
             return res.status(200).json(user)
         })
         .catch(error => res.status(404).json({ error: error }))

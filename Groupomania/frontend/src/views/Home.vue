@@ -1,3 +1,73 @@
+<template>
+  <!--  Navbar-->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <ul class="navbar-nav">
+        <!-- Avatar -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownMenuLink"
+             role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+            <img :src="this.userForm.profilePicture" class="rounded-circle" alt="User Picture" style="width: 3rem;
+    height: 3rem;  object-fit: cover"/>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li>
+              <a class="dropdown-item" href="/profile">Mon profil</a>
+            </li>
+            <li>
+              <a class="dropdown-item" @click="logout">Se déconnecter</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <!--      Logo Groupomania -->
+      <img src="/logo/GroupomaniaLogos/logo-no-background.png" height="56"/>
+      <div style="display: flex;
+    justify-content: flex-end;">
+        <input type="submit" @click="logout()" class="btn btn-danger px-4" value="Se déconnecter">
+      </div>
+    </div>
+  </nav>
+
+  <!-- partie Bloc commentaire -->
+  <div class="container-md mt-4">
+
+    <div class="col-md-7 offset-md-2">
+      <div class="card shadow mb-4">
+        <div class="card-header d-flex flex-row justify-content-between align-items-center">
+          Nouveau commentaire
+          <div class="justify-content-end">
+            <input id="file" type="file" accept="image/*" v-on:change="onChange" style="opacity:0%">
+            <label for="file" class="text-primary"><i class="bi bi-image"></i></label>
+          </div>
+        </div>
+        <div class="card-body">
+          <form action="">
+            <div class="mb-3">
+              <textarea
+                  v-model="postComment.message" class="form-control" id="new-comment" rows="5"
+                        placeholder="🖊️ Écrivez un commentaire..." >
+              </textarea>
+              <img v-if="this.postComment.image" :src="this.postComment.image"
+                   id="ProfilePic" alt="User Profile Picture" width="110"
+                   class="" style=" margin-top: 1rem; "/>
+            </div>
+            <div class="d-flex">
+              <button @click="pushComment" class="ms-auto btn btn-primary">POSTER</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div v-for="comment in comments.slice().reverse()">
+        <comment :comment="comment"></comment>
+
+      </div>
+    </div>
+  </div>
+
+</template>
+
 <script>
 import { $fetch } from "ohmyfetch";
 import Comment from "../components/Comment.vue"
@@ -16,7 +86,9 @@ export default {
         profilePicture: null,
       },
       postComment: {
-        message: ""
+        message: "",
+        image: null,
+        updatedAt:""
       },
       comments: [],
       // reply: []
@@ -36,7 +108,9 @@ export default {
         },
         body: {
           userId,
-          message: this.postComment.message
+          message: this.postComment.message,
+          image: this.postComment.image,
+          updatedAt : this.postComment.updatedAt
         }
       })
     },
@@ -59,6 +133,14 @@ export default {
       this.userForm.service = response.service
       this.userForm.profilePicture = response.profilePicture
     },
+    onChange(e) {
+      const file = e.target.files[0]
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = e => {
+        this.postComment.image = e.target.result
+      }
+    },
   },
   async mounted() {
     await this.getProfile()
@@ -67,114 +149,5 @@ export default {
 }
 </script>
 
-<template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <ul class="navbar-nav">
-        <!-- Avatar -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle d-flex align-items-center"
-             href="#"
-             id="navbarDropdownMenuLink"
-             role="button"
-             data-mdb-toggle="dropdown"
-             aria-expanded="false">
-            <img :src="this.userForm.profilePicture"
-                 class="rounded-circle"
-                 alt="User Picture"
-                 style="width: 3rem;
-    height: 3rem;  object-fit: cover"
-            />
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li>
-              <a class="dropdown-item" href="/profile">Mon profil</a>
-            </li>
-            <li>
-              <a class="dropdown-item" @click="logout">Se déconnecter</a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-      <img src="/logo/GroupomaniaLogos/logo-no-background.png"
-           height="56"
-      />
-      <div style="display: flex;
-    justify-content: flex-end;">
-        <input type="submit" @click="logout()" class="btn btn-danger px-4" value="Se déconnecter">
-      </div>
-    </div>
-  </nav>
-
-  <!-- partie Bloc commentaire -->
-
-  <div class="commentButtonBlock">
-    <div class="form-group" id="commentBlock">
-      <textarea v-model="postComment.message" class="form-control" id="textAreaComment" rows="3"
-                placeholder="🖊️ Écrivez un commentaire..."></textarea>
-    </div>
-    <!-- bouton post commentaire -->
-    <div class="buttonPost">
-      <button type="button" id="postButton" @click="pushComment" class="btn btn-primary">Poster</button>
-    </div>
-  <div v-for="comment in comments">
-    <comment :comment="comment"></comment>
-    </div>
-  </div>
-
-</template>
-
 <style>
-
-#textAreaComment, #fakeComment {
-  height: auto;
-  width: 32rem;
-}
-
-.userIdDate {
-  display: flex;
-  flex-direction: column;
-  line-height: 1rem;
-}
-
-#commentUserId {
-  display: flex;
-  margin-bottom: 1rem;
-  gap: 1rem;
-}
-
-#textAreaComment:focus {
-  outline: none !important;
-  border: 1px solid cornflowerblue;
-  box-shadow: 0 0 10px cornflowerblue;
-
-}
-
-::-webkit-input-placeholder {
-  font-weight: bold;
-}
-
-#commentBlock, #blockFakeComment {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 3rem;
-}
-
-#likeEditDelete .btn {
-  width: 3rem
-}
-
-.commentButtonBlock {
-  display: grid;
-  justify-items: end;
-  justify-content: center;
-}
-
-@media only screen and (max-width: 767px) {
-  .commentButtonBlock {
-    display: block;
-  }
-}
-
 </style>

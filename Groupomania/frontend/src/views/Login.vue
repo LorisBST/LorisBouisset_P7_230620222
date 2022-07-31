@@ -151,7 +151,7 @@ const urlLogin = `http://localhost:4200/api/auth/login`
 const urlSignup = `http://localhost:4200/api/auth/signup`
 
 export default {
-  name: "Login",
+  name: "con,in",
   data() {
     return {
       loginForm: {

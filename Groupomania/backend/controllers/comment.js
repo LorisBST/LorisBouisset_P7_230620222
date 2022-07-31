@@ -19,7 +19,7 @@ exports.getOneComment = (req, res, next) => {
 
 // Créer un commentaire
 exports.createComment = (req, res, next) => {
-  const comment = new Comment({ user: req.body.userId, message: req.body.message })
+  const comment = new Comment({ user: req.body.userId, message: req.body.message, image: req.body.image })
   comment.save()
     .then(() => res.status(201).json({ message: 'Comment saved!' }))
     .catch(error => res.status(400).json({ error }))
