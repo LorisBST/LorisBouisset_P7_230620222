@@ -9,11 +9,17 @@
         {{ comment.user.fullname }} - <em>{{ comment.user.service }}</em>
       </div>
       <div class="ms-auto">
-        <a href="" class="text-warning"><i class="bi bi-pencil-fill"></i>
+        <a v-if="!editing" href="" class="text-warning" @click.prevent="changeState"><i class="bi bi-pencil-fill"></i>
         </a>
       </div>
       <div class="ms-2">
-        <a href="" @click="deleteComment" class="text-danger"><i class="bi bi-file-earmark-excel-fill"></i></a>
+        <a v-if="!editing" href="" @click.prevent="deleteComment" class="text-danger"><i class="bi bi-file-earmark-excel-fill"></i></a>
+      </div>
+    </div>
+    <div v-if="editing" class="card-body">
+      <textarea class="form-control" rows="8" v-model="comment.message"></textarea>
+      <div class="d-flex mt-2">
+        <button class="ms-auto btn btn-sm btn-primary" @click.prevent="updateComment">Enregistrer</button>
       </div>
     </div>
     <div class="card-body">
@@ -39,7 +45,14 @@ export default {
   name: "commentaire",
   props: ["comment","image"],
   data() {
-    return {}
+    return {
+      editing: false,
+      fullname: "",
+      service: "",
+      message: "",
+      image:""
+
+    }
   },
 
   methods: {
@@ -54,10 +67,11 @@ export default {
         },
         body: {
           userId,
-          message: this.postComment.message
+            comment: this.comment.message,
+            image: this.comment.image,
+            updatedAt : this.comment.updatedAt
         }
       })
-      // location.reload()
     },
     async deleteComment() {
       await $fetch(`http://localhost:4200/api/comments/${this.comment._id}`, {
@@ -66,10 +80,15 @@ export default {
           Authorization: `Token ${localStorage.getItem("token")}`,
         },
       })
-
     },
-
+    changeState() {
+      this.editing = !this.editing
+    },
+    // async mounted() {
+    //   await updateComment()
+    // },
   },
+
 }
 
 </script>

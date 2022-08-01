@@ -81,7 +81,8 @@ export default {
       <div class="card">
         <div class="card-body">
           <div class="d-flex flex-column align-items-center text-center">
-            <img :src="userForm.profilePicture" alt="Admin" class="rounded-circle" width="150" style=" object-fit: cover">
+            <img :src="userForm.profilePicture" alt="Admin" class="rounded-circle" style="object-fit: cover; width: 9rem;
+    height: 9rem;">
             <div class="mt-3">
               <h4>{{userForm.fullname}}</h4>
               <p class="text-secondary mb-1">{{userForm.service}}</p>
