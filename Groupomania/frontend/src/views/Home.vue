@@ -91,7 +91,6 @@ export default {
         updatedAt: ""
       },
       comments: [],
-      // reply: []
     }
   },
   methods: {

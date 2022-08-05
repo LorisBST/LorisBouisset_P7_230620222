@@ -38,7 +38,6 @@ exports.signup = (req, res) => {
 };
 
 exports.login = (req, res) => {
-    // console.log("ne devrais pas passer ici pour le signup")
     User.findOne({ email: req.body.email })
         .then(user => {
             if (!user) {

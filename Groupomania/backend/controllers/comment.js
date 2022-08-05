@@ -76,6 +76,8 @@ exports.deleteComment = (req, res, next) => {
     })
 }
 
+
+// Gestion des likes / Unlike
 exports.like = (req, res, next) => {
   if (req.body.like === 1) {
     Comment.findOne({ _id: req.params.id })
