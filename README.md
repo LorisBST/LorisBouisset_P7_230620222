@@ -3,19 +3,27 @@ Repository for Openclassrooms's web developer course last project
 
 
 Installation du projet : 
-- cd frontend
-- npm install
+```
+cd frontend
+npm install 
+cd backend
+npm install 
+```  
 
-- cd backend
-- npm install
+
+
 
 Démarrer le projet : 
 
-- cd frontend 
-- npm run dev 
+``` 
+cd frontend 
+npm run dev 
+cd backend 
+nodemon server 
+```
 
-- cd backend 
-- nodemon server 
 
-Créer un compte 
-Puis se connecter.
+
+Créer un compte,
+
+puis se connecter.
