@@ -32,12 +32,12 @@
   <!-- partie Bloc commentaire -->
   <div class="container-md mt-4">
 
-    <div class="col-md-7 offset-md-2">
+    <div class="col-lg-7 offset-lg-2">
       <div class="card shadow mb-4">
         <div class="card-header d-flex flex-row justify-content-between align-items-center">
           Nouveau commentaire
           <div class="justify-content-end">
-            <input id="file" type="file" accept="image/*" v-on:change="onChange" style="opacity:0%">
+            <input id="file" type="file" accept="image/*" class="visually-hidden" v-on:change="onChange">
             <label for="file" class="text-primary"><i class="bi bi-image"></i></label>
           </div>
         </div>
@@ -46,20 +46,20 @@
             <div class="mb-3">
               <textarea
                   v-model="postComment.message" class="form-control" id="new-comment" rows="5"
-                        placeholder="🖊️ Écrivez un commentaire..." >
+                  placeholder="🖊️ Écrivez un commentaire...">
               </textarea>
               <img v-if="this.postComment.image" :src="this.postComment.image"
                    id="ProfilePic" alt="User Profile Picture" width="110"
                    class="" style=" margin-top: 1rem; "/>
             </div>
             <div class="d-flex">
-              <button @click="pushComment" class="ms-auto btn btn-primary">POSTER</button>
+              <button @click.prevent="pushComment" class="ms-auto btn btn-primary">POSTER</button>
             </div>
           </form>
         </div>
       </div>
-
-      <div v-for="comment in comments.slice().reverse()">
+      <!--      .slice().reverse()-->
+      <div v-for="comment in comments">
         <comment :comment="comment"></comment>
 
       </div>
@@ -88,7 +88,7 @@ export default {
       postComment: {
         message: "",
         image: null,
-        updatedAt:""
+        updatedAt: ""
       },
       comments: [],
       // reply: []
@@ -110,9 +110,11 @@ export default {
           userId,
           message: this.postComment.message,
           image: this.postComment.image,
-          updatedAt : this.postComment.updatedAt
+          updatedAt: this.postComment.updatedAt
         }
       })
+      this.comments.unshift(response)
+      this.postComment.message = ""
     },
     async getComment() {
       this.comments = await $fetch("http://localhost:4200/api/comments", {

@@ -69,8 +69,7 @@
                 <div class="col-sm-3"></div>
                 <div class="col-sm-9 text-secondary">
                   <input type="submit" @click="updateProfile()
-                  ; goProfile()
-" class="btn btn-primary px-4"
+                  ; goProfile()" class="btn btn-primary px-4"
                          value="Enregistrer">
                 </div>
               </div>
@@ -82,13 +81,6 @@
   </div>
 </template>
 <style>
-
-/*#ProfilePic {*/
-/*  width: 12rem*/
-/*}*/
-
-
-
 
 .inputfile {
   width: 0.1px;
@@ -105,11 +97,6 @@
   height: 8rem;
   border-radius: 50% !important;
 }
-
-/*.fa-camera {*/
-/*  position: relative;*/
-/*  overflow: hidden;*/
-/*}*/
 
 .fa-camera {
   opacity: 70%;
@@ -186,7 +173,6 @@ export default {
       const response = await $fetch(`http://localhost:4200/api/auth/profile/${userId}`, {
         method: "PUT",
         headers: { Authorization: `Token ${localStorage.getItem("token")}` ,
-          // 'Content-Type': 'multipart/form-data'
         },
         body: {
           userId,
