@@ -47,9 +47,6 @@
             <div class="col-md-6 d-flex justify-content-center">
               <!-- Checkbox -->
               <div class="form-check mb-3 mb-md-0">
-                <input class="form-check-input" type="checkbox" value="" id="loginCheck"
-                       style="background: black; border-color:#FD2D01"/>
-                <label class="form-check-label" for="loginCheck"> Se souvenir de moi </label>
               </div>
             </div>
           </div>
@@ -79,11 +76,6 @@
           </div>
           <!-- Checkbox -->
           <div class="form-check d-flex justify-content-center mb-4">
-            <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck"
-                   aria-describedby="registerCheckHelpText" style="background: black; border-color:#FD2D01"/>
-            <label class="form-check-label" for="registerCheck">
-              J'ai lu et j'accèpte les conditions d'utilisations.
-            </label>
           </div>
 
           <!-- Submit button -->

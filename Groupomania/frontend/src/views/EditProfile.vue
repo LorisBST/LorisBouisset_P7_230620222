@@ -82,6 +82,12 @@
 </template>
 <style>
 
+
+body {
+  font-family: Lato,serif;
+}
+
+
 .inputfile {
   width: 0.1px;
   height: 0.1px;
