@@ -19,7 +19,7 @@ Démarrer le projet :
 cd frontend 
 npm run dev 
 cd backend 
-nodemon server 
+npx nodemon server
 ```
 
 
