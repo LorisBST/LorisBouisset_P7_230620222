@@ -21,7 +21,7 @@
         </li>
       </ul>
       <!--      Logo Groupomania -->
-      <img src="/logo/GroupomaniaLogos/logo-no-background.png" height="56"/>
+      <img src="/logo/GroupomaniaLogos/logo-no-background.png" alt="Logo Groupomania" height="56"/>
       <div style="display: flex;
     justify-content: flex-end;">
         <input type="submit" @click="logout()" class="btn btn-danger px-4" value="Se déconnecter">
@@ -60,7 +60,7 @@
       </div>
       <!--      .slice().reverse()-->
       <div v-for="comment in comments">
-        <comment :comment="comment"></comment>
+        <comment :comment="comment" :userForm='userForm'></comment>
 
       </div>
     </div>
@@ -69,6 +69,8 @@
 </template>
 
 <script>
+
+
 import { $fetch } from "ohmyfetch";
 import Comment from "../components/Comment.vue"
 
@@ -84,15 +86,17 @@ export default {
         email: "",
         service: "",
         profilePicture: null,
+        admin: Boolean()
       },
       postComment: {
         message: "",
         image: null,
-        updatedAt: ""
+        updatedAt: "",
       },
       comments: [],
     }
   },
+
   methods: {
     logout() {
       localStorage.clear()
@@ -109,7 +113,7 @@ export default {
           userId,
           message: this.postComment.message,
           image: this.postComment.image,
-          updatedAt: this.postComment.updatedAt
+          updatedAt: this.postComment.updatedAt,
         }
       })
       this.comments.unshift(response)
@@ -122,6 +126,7 @@ export default {
           Authorization: `Token ${localStorage.getItem("token")}`,
         },
       })
+
     },
     async getProfile() {
       const urlProfile = `http://localhost:4200/api/auth/profile/${localStorage.getItem('userId')}`
@@ -133,6 +138,7 @@ export default {
       this.userForm.email = response.email
       this.userForm.service = response.service
       this.userForm.profilePicture = response.profilePicture
+      this.userForm.admin = response.admin
     },
     onChange(e) {
       const file = e.target.files[0]

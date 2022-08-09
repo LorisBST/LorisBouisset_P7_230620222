@@ -4,7 +4,7 @@ const auth = require('../middleware/auth')
 
 // Récuperer tous les commentaires
 exports.getAllComments = (req, res, next) => {
-  Comment.find().populate("user", "fullname profilePicture service")
+  Comment.find().populate("user", "fullname profilePicture service admin")
     .sort({ createdAt: -1 })
     .then(comments => res.status(200).json(comments))
     .catch(error => res.status(400).json({ error: error }))
@@ -32,7 +32,7 @@ exports.createComment = (req, res, next) => {
 // update comment
 exports.updateComment = (req, res, next) => {
   const commentObject = { ...req.body }
-  Comment.findOne({ _id: req.params.id }).populate("user", "email")
+  Comment.findOne({ _id: req.params.id }).populate("user", "email" )
     .then(Comment => {
       if (Comment.user._id.toString() === req.auth.userId) {
         Comment.updateOne({ ...commentObject })

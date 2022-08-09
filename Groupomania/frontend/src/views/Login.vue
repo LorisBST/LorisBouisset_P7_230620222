@@ -1,3 +1,4 @@
+Vue.config.silent = true
 <template>
 
   <div class="d-flex flex-column d-flex align-items-center">
@@ -168,7 +169,7 @@ export default {
       const token = response.token
       localStorage.setItem('token', token)
       localStorage.setItem("userId", response.userId)
-      this.$router.push('/profile')
+      this.$router.push('/')
     },
 
     async register() {
@@ -182,4 +183,5 @@ export default {
     }
   }
 }
+
 </script>

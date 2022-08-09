@@ -11,12 +11,15 @@
         {{ comment.user.fullname }} - <em>{{ comment.user.service }}</em>
       </div>
       <div class="ms-auto">
-        <a v-if="!editing" href="" class="text-warning" @click.prevent="changeState"><i class="bi bi-pencil-fill"></i>
-        </a>
+        <a v-if="!editing && (localUserId === comment.user._id || userForm.admin === true) " href="" class="text-warning"
+           @click.prevent="changeState"><i class="bi bi-pencil-fill"></i></a>
+        <a v-else></a>
       </div>
       <div class="ms-2">
-        <a v-if="!editing" href="" @click.prevent="deleteComment" class="text-danger"><i
+        <a v-if="!editing && (localUserId === comment.user._id || userForm.admin === true) " href=""
+           @click.prevent="deleteComment" class="text-danger"><i
             class="bi bi-file-earmark-excel-fill"></i></a>
+        <a v-else></a>
       </div>
     </div>
     <div v-if="editing" class="card-body">
@@ -29,36 +32,33 @@
       <p class="card-text">
         {{ comment.message }}
       </p>
-      <div class="card-img"><img :src="comment.image" style="    width: 100%;"></div>
+      <div class="card-img"><img :src="comment.image" style="width: 100%;"></div>
       <small class="text-muted">{{ formatDate }} – {{ comment.usersLiked.length }}
-        <a v-if="comment.usersLiked.includes(localUserId)" href="#" class="text-decoration-none" @click.prevent="unlike"><i
+        <a v-if="comment.usersLiked.includes(localUserId)" href="#" class="text-decoration-none"
+           @click.prevent="unlike"><i
             class="bi bi-hand-thumbs-up-fill"></i></a>
         <a v-else href="#" class="text-decoration-none" @click.prevent="like"><i
             class="bi bi-hand-thumbs-up"></i></a>
       </small>
     </div>
   </div>
+
 </template>
 
 <style>
 </style>
 
 <script>
-
 import { $fetch } from "ohmyfetch";
 
 
 export default {
   name: "commentaire",
-  props: ["comment", "image"],
+  props: ["comment", "image", "userForm"],
   data() {
     return {
       editing: false,
-      deleted : false,
-      fullname: "",
-      service: "",
-      message: "",
-      image: "",
+      deleted: false,
     }
   },
 
@@ -68,7 +68,7 @@ export default {
     },
     localUserId() {
       return localStorage.getItem('userId')
-    }
+    },
   },
 
   methods: {
@@ -128,5 +128,6 @@ export default {
     },
   },
 }
+
 
 </script>
